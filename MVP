@@ -71,7 +71,7 @@
   </div>
 
   <script>
-    const WEB_APP_URL = 'URL_WEB_APP_YOUR'; // جایگزین کنید با URL وب اپ
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwfIRVHTCc-LMhpOLP-YRP21apGo9SREphRqmUDGSpWqHE-qpGPlnkO-IhsZuLWaRCBOQ/exec'; // جایگزین کنید با URL وب اپ
 
     function fetchScore() {
       const code = document.getElementById('marketerCode').value.trim();
