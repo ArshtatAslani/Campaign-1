@@ -2,70 +2,369 @@
 <html dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>سیستم امتیاز بازاریابان</title>
+  <title>سیستم امتیاز بازاریابان - کمپین ویژه</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* استایل‌ها بدون تغییر */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: #333;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .header {
+      background: linear-gradient(to right, #4e54c8, #8f94fb);
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .header p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .campaign-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: #ff5722;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .content {
+      padding: 30px 25px;
+    }
+
+    .input-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 20px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+      outline: none;
+    }
+
+    .input-group input:focus {
+      border-color: #4e54c8;
+      box-shadow: 0 0 0 3px rgba(78, 84, 200, 0.2);
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(to right, #4e54c8, #8f94fb);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(78, 84, 200, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(78, 84, 200, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn i {
+      margin-left: 8px;
+    }
+
+    #result {
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 15px;
+      display: none;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .success {
+      background: linear-gradient(to right, #00b09b, #96c93d);
+      color: white;
+      text-align: center;
+    }
+
+    .error {
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      color: white;
+      text-align: center;
+    }
+
+    .marketer-info {
+      margin-bottom: 15px;
+    }
+
+    .marketer-info p {
+      margin: 8px 0;
+      font-size: 1.1rem;
+    }
+
+    .score-display {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 15px 0;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .leaderboard {
+      margin-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      padding-top: 20px;
+    }
+
+    .leaderboard h3 {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .leaderboard ol {
+      text-align: right;
+      padding-right: 20px;
+    }
+
+    .leaderboard li {
+      margin: 10px 0;
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+      font-size: 0.9rem;
+      border-top: 1px solid #eee;
+    }
+
+    .footer a {
+      color: #4e54c8;
+      text-decoration: none;
+    }
+
+    /* Responsive design */
+    @media (max-width: 600px) {
+      .container {
+        margin: 10px;
+        border-radius: 15px;
+      }
+      
+      .header {
+        padding: 20px 15px;
+      }
+      
+      .header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .content {
+        padding: 20px 15px;
+      }
+      
+      .score-display {
+        font-size: 2rem;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🔍 بررسی امتیاز بازاریاب</h1>
-    <input type="number" id="marketerCode" placeholder="کد عددی خود را وارد کنید (مثال: 12346)" required>
-    <button onclick="fetchScore()">نمایش امتیاز</button>
-    <div id="result"></div>
+    <div class="header">
+      <div class="campaign-badge">کمپین تابستانه</div>
+      <h1><i class="fas fa-chart-line"></i> سامانه امتیاز بازاریابان</h1>
+      <p>امتیاز خود را با وارد کردن کد بازاریابی مشاهده کنید</p>
+    </div>
+    
+    <div class="content">
+      <div class="input-group">
+        <label for="marketerCode"><i class="fas fa-id-card"></i> کد بازاریابی</label>
+        <input type="number" id="marketerCode" placeholder="کد عددی خود را وارد کنید (مثال: 12346)" required>
+      </div>
+      
+      <button class="btn" onclick="fetchScore()">
+        <i class="fas fa-search"></i> نمایش امتیاز
+      </button>
+      
+      <div id="result"></div>
+    </div>
+    
+    <div class="footer">
+      <p>پشتیبانی: <a href="tel:+989123456789">۰۹۱۲۳۴۵۶۷۸۹</a> | نسخه ۱.۰.۰</p>
+    </div>
   </div>
 
   <script>
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbznjoNth04qjurLeO18K7bR0WGbsoPayvcy5nbh3TKwyRn-Jm0Nb4ddwuUHuGITq550rw/exec';
+    
+    // لیست رهبران (نمونه داده - در حالت واقعی از سرور دریافت می‌شود)
+    const leaders = [
+      { name: "بازاریاب A", score: 150 },
+      { name: "بازاریاب C", score: 120 },
+      { name: "بازاریاب B", score: 95 },
+      { name: "بازاریاب D", score: 80 },
+      { name: "بازاریاب E", score: 65 }
+    ];
 
     function fetchScore() {
       const codeInput = document.getElementById('marketerCode');
       const code = codeInput.value.trim();
       const resultDiv = document.getElementById('result');
 
+      // پاکسازی نتیجه قبلی
+      resultDiv.style.display = 'none';
+      
+      // اعتبارسنجی ورودی
       if (!code) {
-        showError('لطفاً کد بازاریابی را وارد کنید!');
+        showResult('لطفاً کد بازاریابی را وارد کنید!', 'error');
         return;
       }
-
-      // بررسی معتبر بودن عدد
+      
       if (isNaN(code) || code === '') {
-        showError('کد باید یک عدد معتبر باشد!');
+        showResult('کد باید یک عدد معتبر باشد!', 'error');
         return;
       }
+      
+      // نمایش انیمیشن در حال بارگذاری
+      showResult('<div class="loading"><i class="fas fa-spinner fa-spin"></i> در حال دریافت اطلاعات...</div>', 'info');
 
+      // ارسال درخواست به سرور
       fetch(`${WEB_APP_URL}?code=${encodeURIComponent(code)}`)
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) throw new Error('خطای شبکه');
+          return response.json();
+        })
         .then(data => {
           if (data.error) {
-            showError(data.error + (data.tip ? `<br>${data.tip}` : ''));
+            showResult(data.error, 'error');
           } else {
-            showSuccess(data);
+            showMarketerData(data);
           }
         })
         .catch(error => {
-          showError('خطا در ارتباط با سرور!');
           console.error('Error:', error);
+          showResult('خطا در ارتباط با سرور! لطفاً دوباره تلاش کنید.', 'error');
         });
     }
 
-    function showError(message) {
+    function showResult(message, type = 'info') {
       const resultDiv = document.getElementById('result');
-      resultDiv.innerHTML = `<div class="error">${message}</div>`;
+      resultDiv.innerHTML = `<div class="${type}">${message}</div>`;
       resultDiv.style.display = 'block';
     }
 
-    function showSuccess(data) {
+    function showMarketerData(data) {
       const resultDiv = document.getElementById('result');
+      
+      // HTML برای نمایش اطلاعات بازاریاب
       resultDiv.innerHTML = `
         <div class="success">
-          <p>نام بازاریاب: <strong>${data.name}</strong></p>
-          <p>کد بازاریابی: <strong>${data.code}</strong></p>
-          <p class="score-display">امتیاز شما: ${data.score} 🎯</p>
+          <div class="marketer-info">
+            <p><i class="fas fa-user"></i> نام بازاریاب: <strong>${data.name || '---'}</strong></p>
+            <p><i class="fas fa-id-badge"></i> کد بازاریابی: <strong>${data.code}</strong></p>
+          </div>
+          
+          <div class="score-display">
+            <i class="fas fa-star"></i> ${data.score} امتیاز
+          </div>
+          
+          <div class="leaderboard">
+            <h3><i class="fas fa-trophy"></i> جدول برترین ها</h3>
+            <ol>
+              ${leaders.map((leader, index) => `
+                <li>
+                  <span>${index + 1}. ${leader.name}</span>
+                  <span>${leader.score} امتیاز</span>
+                </li>
+              `).join('')}
+            </ol>
+          </div>
         </div>
       `;
+      
       resultDiv.style.display = 'block';
     }
+    
+    // امکان جستجو با کلید Enter
+    document.getElementById('marketerCode').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        fetchScore();
+      }
+    });
   </script>
 </body>
 </html>
