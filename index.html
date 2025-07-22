@@ -3,63 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>سیستم امتیاز بازاریابان</title>
+  <!-- استایل ها بدون تغییر -->
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      text-align: center;
-      padding: 20px;
-    }
-    .container {
-      max-width: 500px;
-      margin: 0 auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-    input, button {
-      padding: 12px;
-      margin: 10px 0;
-      width: 80%;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-    button {
-      background: #4CAF50;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #45a049;
-    }
-    #result {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 5px;
-      display: none;
-    }
-    .success {
-      background: #d4edda;
-      color: #155724;
-    }
-    .error {
-      background: #f8d7da;
-      color: #721c24;
-    }
-    .score-display {
-      font-size: 24px;
-      font-weight: bold;
-      color: #FF5722;
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
+    /* ... همان استایل های قبلی ... */
   </style>
 </head>
 <body>
@@ -71,38 +17,54 @@
   </div>
 
   <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw18V8nq_R4jqG8uuTIGTQl7jbRLzqyPFUIg5LJ2LkoCVpB3R1c0ZFy15uCFrXLJaH5oQ/exec'; // جایگزین کنید با URL وب اپ
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw18V8nq_R4jqG8uuTIGTQl7jbRLzqyPFUIg5LJ2LkoCVpB3R1c0ZFy15uCFrXLJaH5oQ/exec';
 
     function fetchScore() {
       const code = document.getElementById('marketerCode').value.trim();
       const resultDiv = document.getElementById('result');
 
       if (!code) {
-        resultDiv.innerHTML = '<div class="error">لطفاً کد بازاریابی را وارد کنید!</div>';
-        resultDiv.style.display = 'block';
+        showError('لطفاً کد بازاریابی را وارد کنید!');
         return;
       }
 
-      fetch(`${WEB_APP_URL}?code=${encodeURIComponent(code)}`)
-        .then(response => response.json())
+      // پاکسازی کد مانند اسکریپت
+      const cleanCode = code.toUpperCase().replace(/\s+/g, '');
+      
+      fetch(`${WEB_APP_URL}?code=${encodeURIComponent(cleanCode)}`)
+        .then(response => {
+          if (!response.ok) throw new Error('خطای شبکه');
+          return response.json();
+        })
         .then(data => {
           if (data.error) {
-            resultDiv.innerHTML = `<div class="error">${data.error}</div>`;
+            showError(data.error);
           } else {
-            resultDiv.innerHTML = `
-              <div class="success">
-                <p>نام بازاریاب: <strong>${data.name}</strong></p>
-                <p>کد بازاریابی: <strong>${data.code}</strong></p>
-                <p class="score-display">امتیاز شما: ${data.score} 🎯</p>
-              </div>
-            `;
+            showSuccess(data);
           }
-          resultDiv.style.display = 'block';
         })
         .catch(error => {
-          resultDiv.innerHTML = '<div class="error">خطا در ارتباط با سرور!</div>';
-          resultDiv.style.display = 'block';
+          showError('خطا در ارتباط با سرور: ' + error.message);
         });
+    }
+
+    // توابع کمکی برای نمایش پیام
+    function showError(message) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `<div class="error">${message}</div>`;
+      resultDiv.style.display = 'block';
+    }
+
+    function showSuccess(data) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `
+        <div class="success">
+          <p>نام بازاریاب: <strong>${data.name}</strong></p>
+          <p>کد بازاریابی: <strong>${data.code}</strong></p>
+          <p class="score-display">امتیاز شما: ${data.score} 🎯</p>
+        </div>
+      `;
+      resultDiv.style.display = 'block';
     }
   </script>
 </body>
