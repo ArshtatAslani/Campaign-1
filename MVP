@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>سیستم امتیاز بازاریابان</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    input, button {
+      padding: 12px;
+      margin: 10px 0;
+      width: 80%;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      display: none;
+    }
+    .success {
+      background: #d4edda;
+      color: #155724;
+    }
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .score-display {
+      font-size: 24px;
+      font-weight: bold;
+      color: #FF5722;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 بررسی امتیاز بازاریاب</h1>
+    <input type="text" id="marketerCode" placeholder="کد بازاریابی خود را وارد کنید (مثال: MRK-1001)" required>
+    <button onclick="fetchScore()">نمایش امتیاز</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const WEB_APP_URL = 'URL_WEB_APP_YOUR'; // جایگزین کنید با URL وب اپ
+
+    function fetchScore() {
+      const code = document.getElementById('marketerCode').value.trim();
+      const resultDiv = document.getElementById('result');
+
+      if (!code) {
+        resultDiv.innerHTML = '<div class="error">لطفاً کد بازاریابی را وارد کنید!</div>';
+        resultDiv.style.display = 'block';
+        return;
+      }
+
+      fetch(`${WEB_APP_URL}?code=${encodeURIComponent(code)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            resultDiv.innerHTML = `<div class="error">${data.error}</div>`;
+          } else {
+            resultDiv.innerHTML = `
+              <div class="success">
+                <p>نام بازاریاب: <strong>${data.name}</strong></p>
+                <p>کد بازاریابی: <strong>${data.code}</strong></p>
+                <p class="score-display">امتیاز شما: ${data.score} 🎯</p>
+              </div>
+            `;
+          }
+          resultDiv.style.display = 'block';
+        })
+        .catch(error => {
+          resultDiv.innerHTML = '<div class="error">خطا در ارتباط با سرور!</div>';
+          resultDiv.style.display = 'block';
+        });
+    }
+  </script>
+</body>
+</html>
