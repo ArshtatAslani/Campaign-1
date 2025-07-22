@@ -269,7 +269,7 @@
   </div>
 
   <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbznjoNth04qjurLeO18K7bR0WGbsoPayvcy5nbh3TKwyRn-Jm0Nb4ddwuUHuGITq550rw/exec';
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwMZl9I4rAlvmbnIgbwepFpaqMX-L9mF_Kl8VeXWnNpB6QpCz0hx0GAYaNIDkkG6AIfaw/exec';
     
     // لیست رهبران (نمونه داده - در حالت واقعی از سرور دریافت می‌شود)
     const leaders = [
@@ -302,8 +302,13 @@
       // نمایش انیمیشن در حال بارگذاری
       showResult('<div class="loading"><i class="fas fa-spinner fa-spin"></i> در حال دریافت اطلاعات...</div>', 'info');
 
-      // ارسال درخواست به سرور
-      fetch(`${WEB_APP_URL}?code=${encodeURIComponent(code)}`)
+      // استفاده از پروکسی برای حل مشکل CORS
+      const proxyUrl = 'https://api.allorigins.win/raw?url=';
+      const targetUrl = `${WEB_APP_URL}?code=${encodeURIComponent(code)}`;
+      const fullUrl = proxyUrl + encodeURIComponent(targetUrl);
+
+      // ارسال درخواست به سرور از طریق پروکسی
+      fetch(fullUrl)
         .then(response => {
           if (!response.ok) throw new Error('خطای شبکه');
           return response.json();
