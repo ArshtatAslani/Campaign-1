@@ -6,40 +6,33 @@
 </head>
 <body>
   <h3>استعلام امتیاز بازاریاب</h3>
-  <form id="marketerForm" target="hiddenFrame" onsubmit="handleSubmit(event)">
-    <input type="text" name="code" id="codeInput" placeholder="کد بازاریابی (۵ رقمی)">
-    <button type="submit">بررسی</button>
-  </form>
+  <input type="text" id="codeInput" placeholder="کد بازاریابی (۵ رقمی)">
+  <button onclick="checkScore()">بررسی</button>
   <p id="result"></p>
-  <iframe name="hiddenFrame" style="display:none;" onload="handleResponse()"></iframe>
 
   <script>
-    let lastCode = "";
-
-    function handleSubmit(e) {
-      e.preventDefault();
+    function checkScore() {
       const code = document.getElementById("codeInput").value.trim();
+      const resultEl = document.getElementById("result");
+
       if (!/^\d{5}$/.test(code)) {
-        document.getElementById("result").textContent = "لطفاً یک کد ۵ رقمی وارد کنید.";
+        resultEl.textContent = "کد ۵ رقمی وارد نشده است.";
         return;
       }
-      lastCode = code;
-      document.getElementById("result").textContent = "در حال بررسی...";
-      document.getElementById("marketerForm").action = `https://script.google.com/macros/s/AKfycbwIvuczZd7yczzDvHH6kv512H-2P93iHS7YdCLRY-gSu1Qmrclm-jSQwjkYQUYOnHmfAA/exec?code=${code}`;
+
+      resultEl.textContent = "در حال بررسی...";
+
+      const script = document.createElement("script");
+      script.src = `https://script.google.com/macros/s/AKfycbwcnwLPRGLBOxC6E1_kOhBBs4Wfj34S6H_U8jjvJCa9VWHtkRca6x0vV_Va6iiFVs2BHQ/exec?code=${code}&callback=handleResponse`;
+      document.body.appendChild(script);
     }
 
-    async function handleResponse() {
-      if (!lastCode) return;
-      try {
-        const res = await fetch(`https://script.google.com/macros/s/AKfycbwIvuczZd7yczzDvHH6kv512H-2P93iHS7YdCLRY-gSu1Qmrclm-jSQwjkYQUYOnHmfAA/exec?code=${lastCode}`);
-        const data = await res.json();
-        if (data.error) {
-          document.getElementById("result").textContent = data.error;
-        } else {
-          document.getElementById("result").textContent = `نام: ${data.name} | امتیاز: ${data.score}`;
-        }
-      } catch {
-        document.getElementById("result").textContent = "خطا در دریافت پاسخ.";
+    function handleResponse(data) {
+      const resultEl = document.getElementById("result");
+      if (data.error) {
+        resultEl.textContent = data.error;
+      } else {
+        resultEl.textContent = `نام: ${data.name} | امتیاز: ${data.score}`;
       }
     }
   </script>
