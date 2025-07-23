@@ -276,7 +276,7 @@
 
   <script>
     // حتماً این URL را با آدرس مستقر شده جدید جایگزین کنید
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz6vvRjYUx-GtUqD9Q0a7kQSewYfm7gIPYucoP2zS7xRGnlF1iL6kQSNwMH9MeKGal4jQ/exec';
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxAjghA7gLkXKQ9wGUiG8RKaCpb6YiTa6LCH7ztsN6EkxrUkdDJo-dnWh41CZf_M1qKnA/exec';
     
     // لیست رهبران (نمونه داده)
     const leaders = [
@@ -307,25 +307,21 @@
       }
       
       // نمایش انیمیشن در حال بارگذاری
-      showResult('<div><i class="fas fa-spinner fa-spin"></i> در حال دریافت اطلاعات...</div>', 'info');
+      showResult('<div class="info"><i class="fas fa-spinner fa-spin"></i> در حال دریافت اطلاعات...</div>');
 
       try {
-        // ارسال درخواست به سرور با استفاده از GET ساده
-        const response = await fetch(`${WEB_APP_URL}?code=${encodeURIComponent(code)}`, {
-          method: 'GET',
-          redirect: 'follow'
-        });
-
-        if (!response.ok) {
-          throw new Error('خطای شبکه: ' + response.status);
-        }
-
-        const data = await response.json();
+        // راهکار جایگزین: استفاده از Google Apps Script بدون نیاز به CORS
+        const response = await fetch(`${WEB_APP_URL}?code=${encodeURIComponent(code)}`);
         
-        if (data.error) {
-          showResult(data.error, 'error');
+        // اگر پاسخ ریدایرکت باشد (کد 302)
+        if (response.redirected) {
+          // درخواست جدید به URL ریدایرکت شده
+          const redirectedResponse = await fetch(response.url);
+          const data = await redirectedResponse.json();
+          handleResponseData(data);
         } else {
-          showMarketerData(data);
+          const data = await response.json();
+          handleResponseData(data);
         }
       } catch (error) {
         console.error('Error:', error);
@@ -333,9 +329,23 @@
       }
     }
 
+    function handleResponseData(data) {
+      if (data.error) {
+        showResult(data.error, 'error');
+      } else {
+        showMarketerData(data);
+      }
+    }
+
     function showResult(message, type = 'info') {
       const resultDiv = document.getElementById('result');
-      resultDiv.innerHTML = `<div class="${type}">${message}</div>`;
+      
+      if (type === 'info') {
+        resultDiv.innerHTML = `<div class="info">${message}</div>`;
+      } else {
+        resultDiv.innerHTML = `<div class="${type}">${message}</div>`;
+      }
+      
       resultDiv.style.display = 'block';
     }
 
