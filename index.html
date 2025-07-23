@@ -1,392 +1,398 @@
 <!DOCTYPE html>
-<html dir="rtl">
+<html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>سیستم امتیاز بازاریابان - کمپین ویژه</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-      color: #333;
-      min-height: 100vh;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 500px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-      animation: fadeIn 0.8s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .header {
-      background: linear-gradient(to right, #4e54c8, #8f94fb);
-      color: white;
-      padding: 25px 20px;
-      text-align: center;
-      position: relative;
-    }
-
-    .header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .header p {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-
-    .campaign-badge {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      background: #ff5722;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-
-    .content {
-      padding: 30px 25px;
-    }
-
-    .input-group {
-      margin-bottom: 25px;
-      position: relative;
-    }
-
-    .input-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #444;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 14px 20px;
-      border: 2px solid #ddd;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      transition: all 0.3s;
-      outline: none;
-    }
-
-    .input-group input:focus {
-      border-color: #4e54c8;
-      box-shadow: 0 0 0 3px rgba(78, 84, 200, 0.2);
-    }
-
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(to right, #4e54c8, #8f94fb);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 4px 15px rgba(78, 84, 200, 0.3);
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(78, 84, 200, 0.4);
-    }
-
-    .btn:active {
-      transform: translateY(1px);
-    }
-
-    .btn i {
-      margin-left: 8px;
-    }
-
-    #result {
-      margin-top: 25px;
-      padding: 20px;
-      border-radius: 15px;
-      display: none;
-      animation: slideIn 0.5s ease-out;
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .success {
-      background: linear-gradient(to right, #00b09b, #96c93d);
-      color: white;
-      text-align: center;
-    }
-
-    .error {
-      background: linear-gradient(to right, #ff416c, #ff4b2b);
-      color: white;
-      text-align: center;
-    }
-
-    .info {
-      background: linear-gradient(to right, #4A00E0, #8E2DE2);
-      color: white;
-      text-align: center;
-    }
-
-    .marketer-info {
-      margin-bottom: 15px;
-    }
-
-    .marketer-info p {
-      margin: 8px 0;
-      font-size: 1.1rem;
-    }
-
-    .score-display {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin: 15px 0;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    .leaderboard {
-      margin-top: 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.3);
-      padding-top: 20px;
-    }
-
-    .leaderboard h3 {
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .leaderboard ol {
-      text-align: right;
-      padding-right: 20px;
-    }
-
-    .leaderboard li {
-      margin: 10px 0;
-      font-size: 1.1rem;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 20px;
-      color: #777;
-      font-size: 0.9rem;
-      border-top: 1px solid #eee;
-    }
-
-    .footer a {
-      color: #4e54c8;
-      text-decoration: none;
-    }
-
-    /* Responsive design */
-    @media (max-width: 600px) {
-      .container {
-        margin: 10px;
-        border-radius: 15px;
-      }
-      
-      .header {
-        padding: 20px 15px;
-      }
-      
-      .header h1 {
-        font-size: 1.5rem;
-      }
-      
-      .content {
-        padding: 20px 15px;
-      }
-      
-      .score-display {
-        font-size: 2rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستم امتیاز بازاریاب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, #3498db, #2c3e50);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        .input-container {
+            display: flex;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-container i {
+            background: linear-gradient(90deg, #3498db, #2c3e50);
+            color: white;
+            padding: 15px;
+            font-size: 1.2rem;
+            min-width: 55px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            font-size: 1.1rem;
+            background-color: #f8f9fa;
+            outline: none;
+            transition: background-color 0.3s;
+        }
+        
+        input:focus {
+            background-color: #e9f7fe;
+        }
+        
+        button {
+            background: linear-gradient(90deg, #3498db, #2c3e50);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.6);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .result-container {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+            display: none;
+            border: 2px solid #3498db;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed #ced4da;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .result-value {
+            font-weight: 600;
+            color: #e74c3c;
+        }
+        
+        .score-display {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e74c3c;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        
+        .loading i {
+            font-size: 2.5rem;
+            color: #3498db;
+            animation: spin 1s linear infinite;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="campaign-badge">کمپین تابستانه</div>
-      <h1><i class="fas fa-chart-line"></i> سامانه امتیاز بازاریابان</h1>
-      <p>امتیاز خود را با وارد کردن کد بازاریابی مشاهده کنید</p>
-    </div>
-    
-    <div class="content">
-      <div class="input-group">
-        <label for="marketerCode"><i class="fas fa-id-card"></i> کد بازاریابی</label>
-        <input type="number" id="marketerCode" placeholder="کد عددی خود را وارد کنید (مثال: 12346)" required>
-      </div>
-      
-      <button class="btn" onclick="fetchScore()">
-        <i class="fas fa-search"></i> نمایش امتیاز
-      </button>
-      
-      <div id="result"></div>
-    </div>
-    
-    <div class="footer">
-      <p>پشتیبانی: <a href="tel:+9809338128153">09338128153</a> | نسخه ۱.۰.۰</p>
-    </div>
-  </div>
-
-  <script>
-    // حتماً این URL را با آدرس مستقر شده جدید جایگزین کنید
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwIvuczZd7yczzDvHH6kv512H-2P93iHS7YdCLRY-gSu1Qmrclm-jSQwjkYQUYOnHmfAA/exec';
-    
-    // لیست رهبران (نمونه داده)
-    const leaders = [
-      { name: "بازاریاب A", score: 150 },
-      { name: "بازاریاب C", score: 120 },
-      { name: "بازاریاب B", score: 95 },
-      { name: "بازاریاب D", score: 80 },
-      { name: "بازاریاب E", score: 65 }
-    ];
-
-    async function fetchScore() {
-      const codeInput = document.getElementById('marketerCode');
-      const code = codeInput.value.trim();
-      const resultDiv = document.getElementById('result');
-
-      // پاکسازی نتیجه قبلی
-      resultDiv.style.display = 'none';
-      
-      // اعتبارسنجی ورودی
-      if (!code) {
-        showResult('لطفاً کد بازاریابی را وارد کنید!', 'error');
-        return;
-      }
-      
-      if (isNaN(code) || code === '') {
-        showResult('کد باید یک عدد معتبر باشد!', 'error');
-        return;
-      }
-      
-      // نمایش انیمیشن در حال بارگذاری
-      showResult('<div class="info"><i class="fas fa-spinner fa-spin"></i> در حال دریافت اطلاعات...</div>');
-
-      try {
-        // راهکار جایگزین: استفاده از Google Apps Script بدون نیاز به CORS
-        const response = await fetch(`${WEB_APP_URL}?code=${encodeURIComponent(code)}`);
-        
-        // اگر پاسخ ریدایرکت باشد (کد 302)
-        if (response.redirected) {
-          // درخواست جدید به URL ریدایرکت شده
-          const redirectedResponse = await fetch(response.url);
-          const data = await redirectedResponse.json();
-          handleResponseData(data);
-        } else {
-          const data = await response.json();
-          handleResponseData(data);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        showResult('خطا در ارتباط با سرور: ' + error.message, 'error');
-      }
-    }
-
-    function handleResponseData(data) {
-      if (data.error) {
-        showResult(data.error, 'error');
-      } else {
-        showMarketerData(data);
-      }
-    }
-
-    function showResult(message, type = 'info') {
-      const resultDiv = document.getElementById('result');
-      
-      if (type === 'info') {
-        resultDiv.innerHTML = `<div class="info">${message}</div>`;
-      } else {
-        resultDiv.innerHTML = `<div class="${type}">${message}</div>`;
-      }
-      
-      resultDiv.style.display = 'block';
-    }
-
-    function showMarketerData(data) {
-      const resultDiv = document.getElementById('result');
-      
-      // HTML برای نمایش اطلاعات بازاریاب
-      resultDiv.innerHTML = `
-        <div class="success">
-          <div class="marketer-info">
-            <p><i class="fas fa-user"></i> نام بازاریاب: <strong>${data.name || '---'}</strong></p>
-            <p><i class="fas fa-id-badge"></i> کد بازاریابی: <strong>${data.code}</strong></p>
-          </div>
-          
-          <div class="score-display">
-            <i class="fas fa-star"></i> ${data.score} امتیاز
-          </div>
-          
-          <div class="leaderboard">
-            <h3><i class="fas fa-trophy"></i> جدول برترین ها</h3>
-            <ol>
-              ${leaders.map((leader, index) => `
-                <li>
-                  <span>${index + 1}. ${leader.name}</span>
-                  <span>${leader.score} امتیاز</span>
-                </li>
-              `).join('')}
-            </ol>
-          </div>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-chart-line"></i> سیستم امتیاز بازاریاب</h1>
+            <p>اطلاعات بازاریابان را بر اساس کد بازاریابی جستجو کنید</p>
         </div>
-      `;
-      
-      resultDiv.style.display = 'block';
-    }
-    
-    // امکان جستجو با کلید Enter
-    document.getElementById('marketerCode').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        fetchScore();
-      }
-    });
-  </script>
+        
+        <div class="content">
+            <div class="input-group">
+                <label for="marketerCode"><i class="fas fa-user-tag"></i> کد بازاریابی را وارد کنید:</label>
+                <div class="input-container">
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" id="marketerCode" placeholder="مثال: MK-1001">
+                </div>
+            </div>
+            
+            <button id="searchBtn">
+                <i class="fas fa-search"></i> جستجوی اطلاعات
+            </button>
+            
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner"></i>
+                <p>در حال دریافت اطلاعات...</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            
+            <div class="result-container" id="resultContainer">
+                <h3 class="result-header"><i class="fas fa-user-check"></i> اطلاعات بازاریاب</h3>
+                
+                <div class="result-item">
+                    <span class="result-label">کد بازاریاب:</span>
+                    <span class="result-value" id="resultCode">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">نام بازاریاب:</span>
+                    <span class="result-value" id="resultName">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">امتیاز:</span>
+                    <span class="result-value" id="resultScore">-</span>
+                </div>
+                
+                <div class="score-display" id="scoreDisplay">-</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>تمامی حقوق محفوظ است © ۲۰۲۳</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBtn = document.getElementById('searchBtn');
+            const marketerCodeInput = document.getElementById('marketerCode');
+            const resultContainer = document.getElementById('resultContainer');
+            const errorMessage = document.getElementById('errorMessage');
+            const loading = document.getElementById('loading');
+            
+            const resultCode = document.getElementById('resultCode');
+            const resultName = document.getElementById('resultName');
+            const resultScore = document.getElementById('resultScore');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            
+            // تابع برای جستجوی اطلاعات بازاریاب
+            async function searchMarketer() {
+                const code = marketerCodeInput.value.trim();
+                
+                // اعتبارسنجی ورودی
+                if (!code) {
+                    showError('لطفاً کد بازاریابی را وارد کنید');
+                    return;
+                }
+                
+                // پنهان کردن خطاها و نتایج قبلی
+                hideResults();
+                hideError();
+                showLoading();
+                
+                try {
+                    // ایجاد URL با پارامتر کد بازاریاب
+                    const scriptUrl = 'https://script.google.com/macros/s/AKfycbwIvuczZd7yczzDvHH6kv512H-2P93iHS7YdCLRY-gSu1Qmrclm-jSQwjkYQUYOnHmfAA/exec';
+                    const url = `${scriptUrl}?code=${encodeURIComponent(code)}`;
+                    
+                    // ارسال درخواست به Google Apps Script
+                    const response = await fetch(url);
+                    
+                    if (!response.ok) {
+                        throw new Error('خطا در دریافت اطلاعات از سرور');
+                    }
+                    
+                    const data = await response.json();
+                    
+                    // بررسی وجود خطا در پاسخ
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    
+                    // نمایش نتایج
+                    displayResults(data);
+                } catch (error) {
+                    showError(error.message);
+                } finally {
+                    hideLoading();
+                }
+            }
+            
+            // نمایش نتایج
+            function displayResults(data) {
+                resultCode.textContent = data.code;
+                resultName.textContent = data.name;
+                resultScore.textContent = data.score;
+                scoreDisplay.textContent = data.score;
+                
+                resultContainer.style.display = 'block';
+            }
+            
+            // نمایش خطا
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+            }
+            
+            // پنهان کردن خطا
+            function hideError() {
+                errorMessage.style.display = 'none';
+            }
+            
+            // پنهان کردن نتایج
+            function hideResults() {
+                resultContainer.style.display = 'none';
+            }
+            
+            // نمایش وضعیت لودینگ
+            function showLoading() {
+                loading.style.display = 'block';
+            }
+            
+            // پنهان کردن وضعیت لودینگ
+            function hideLoading() {
+                loading.style.display = 'none';
+            }
+            
+            // رویداد کلیک دکمه جستجو
+            searchBtn.addEventListener('click', searchMarketer);
+            
+            // امکان جستجو با دکمه Enter
+            marketerCodeInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchMarketer();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
