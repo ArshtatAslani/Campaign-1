@@ -156,6 +156,12 @@
       text-align: center;
     }
 
+    .info {
+      background: linear-gradient(to right, #4A00E0, #8E2DE2);
+      color: white;
+      text-align: center;
+    }
+
     .marketer-info {
       margin-bottom: 15px;
     }
@@ -269,9 +275,10 @@
   </div>
 
   <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxAjghA7gLkXKQ9wGUiG8RKaCpb6YiTa6LCH7ztsN6EkxrUkdDJo-dnWh41CZf_M1qKnA/exec';
+    // حتماً این URL را با آدرس مستقر شده جدید جایگزین کنید
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz6vvRjYUx-GtUqD9Q0a7kQSewYfm7gIPYucoP2zS7xRGnlF1iL6kQSNwMH9MeKGal4jQ/exec/exec';
     
-    // لیست رهبران (نمونه داده - در حالت واقعی از سرور دریافت می‌شود)
+    // لیست رهبران (نمونه داده)
     const leaders = [
       { name: "بازاریاب A", score: 150 },
       { name: "بازاریاب C", score: 120 },
@@ -280,7 +287,7 @@
       { name: "بازاریاب E", score: 65 }
     ];
 
-    function fetchScore() {
+    async function fetchScore() {
       const codeInput = document.getElementById('marketerCode');
       const code = codeInput.value.trim();
       const resultDiv = document.getElementById('result');
@@ -300,30 +307,30 @@
       }
       
       // نمایش انیمیشن در حال بارگذاری
-      showResult('<div class="loading"><i class="fas fa-spinner fa-spin"></i> در حال دریافت اطلاعات...</div>', 'info');
+      showResult('<div><i class="fas fa-spinner fa-spin"></i> در حال دریافت اطلاعات...</div>', 'info');
 
-      // استفاده از پروکسی برای حل مشکل CORS
-      const proxyUrl = 'https://api.allorigins.win/raw?url=';
-      const targetUrl = `${WEB_APP_URL}?code=${encodeURIComponent(code)}`;
-      const fullUrl = proxyUrl + encodeURIComponent(targetUrl);
-
-      // ارسال درخواست به سرور از طریق پروکسی
-      fetch(fullUrl)
-        .then(response => {
-          if (!response.ok) throw new Error('خطای شبکه');
-          return response.json();
-        })
-        .then(data => {
-          if (data.error) {
-            showResult(data.error, 'error');
-          } else {
-            showMarketerData(data);
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          showResult('خطا در ارتباط با سرور! لطفاً دوباره تلاش کنید.', 'error');
+      try {
+        // ارسال درخواست به سرور با استفاده از GET ساده
+        const response = await fetch(`${WEB_APP_URL}?code=${encodeURIComponent(code)}`, {
+          method: 'GET',
+          redirect: 'follow'
         });
+
+        if (!response.ok) {
+          throw new Error('خطای شبکه: ' + response.status);
+        }
+
+        const data = await response.json();
+        
+        if (data.error) {
+          showResult(data.error, 'error');
+        } else {
+          showMarketerData(data);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showResult('خطا در ارتباط با سرور: ' + error.message, 'error');
+      }
     }
 
     function showResult(message, type = 'info') {
