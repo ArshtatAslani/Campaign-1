@@ -469,6 +469,10 @@
       // Create script element for JSONP
       const script = document.createElement('script');
       script.src = `${SCRIPT_URL}?code=${code}&callback=handleResponse`;
+      script.onerror = function() {
+        showError("خطا در اتصال به سرور. لطفاً دوباره تلاش کنید.");
+        loadingEl.style.display = "none";
+      };
       document.body.appendChild(script);
     }
     
@@ -484,6 +488,15 @@
         showError(data.error);
         return;
       }
+      
+      // Validate data structure
+      if (!data.name || data.registration_score === undefined || data.presence_score === undefined) {
+        showError("داده‌های دریافتی ناقص هستند");
+        return;
+      }
+      
+      // Calculate total score
+      const totalScore = parseInt(data.registration_score) + parseInt(data.presence_score);
       
       // Render results
       resultContent.innerHTML = `
@@ -503,7 +516,7 @@
               <i class="fas fa-user-plus"></i>
               امتیاز ثبت‌نام
             </div>
-            <div class="score-value">${data.signup_score}</div>
+            <div class="score-value">${data.registration_score}</div>
             <div class="score-unit">امتیاز</div>
           </div>
           
@@ -521,7 +534,7 @@
               <i class="fas fa-star"></i>
               امتیاز کل
             </div>
-            <div class="score-value">${data.total_score}</div>
+            <div class="score-value">${totalScore}</div>
             <div class="score-unit">امتیاز</div>
           </div>
         </div>
@@ -567,6 +580,9 @@
     // Add input validation to allow only numbers
     document.getElementById("codeInput").addEventListener("input", function() {
       this.value = this.value.replace(/\D/g, '');
+      if (this.value.length > 5) {
+        this.value = this.value.slice(0, 5);
+      }
     });
     
     // Add animation when page loads
