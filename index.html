@@ -3,19 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>استعلام امتیاز بازاریاب | سیستم مدیریت بازاریابی</title>
+  <title>کمپین ویژه بازاریابان | استعلام امتیاز</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Vazirmatn', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     
     body {
-      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -25,44 +24,89 @@
       line-height: 1.6;
     }
     
+    .campaign-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 4px 15px rgba(255, 138, 0, 0.5);
+      z-index: 10;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
     .container {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.97);
       border-radius: 20px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
       width: 100%;
       max-width: 500px;
       overflow: hidden;
+      position: relative;
       transform: translateY(0);
-      transition: transform 0.3s ease;
+      transition: transform 0.4s ease;
     }
     
     .container:hover {
-      transform: translateY(-5px);
+      transform: translateY(-10px);
     }
     
     header {
-      background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+      background: linear-gradient(90deg, #0c3483 0%, #2a5298 100%);
       color: white;
       text-align: center;
-      padding: 25px 20px;
+      padding: 30px 20px;
       position: relative;
+      overflow: hidden;
+    }
+    
+    header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      transform: rotate(30deg);
     }
     
     .logo {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+      font-size: 3rem;
+      margin-bottom: 15px;
       color: #FFD700;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     }
     
     h1 {
       font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    
+    .campaign-title {
+      font-size: 1.4rem;
+      color: #FFD700;
+      margin-bottom: 15px;
       font-weight: 700;
     }
     
     .subtitle {
-      font-size: 0.9rem;
+      font-size: 1rem;
       opacity: 0.9;
-      margin-top: 5px;
+      max-width: 80%;
+      margin: 0 auto;
+      line-height: 1.8;
     }
     
     .main-content {
@@ -70,16 +114,16 @@
     }
     
     .input-group {
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       position: relative;
     }
     
     label {
       display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      color: #182848;
-      font-size: 1rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #0c3483;
+      font-size: 1.1rem;
     }
     
     .input-field {
@@ -88,103 +132,68 @@
     
     input {
       width: 100%;
-      padding: 15px 20px 15px 50px;
-      border: 2px solid #e1e5ee;
-      border-radius: 12px;
-      font-size: 1rem;
+      padding: 17px 20px 17px 60px;
+      border: 2px solid #d1e3ff;
+      border-radius: 15px;
+      font-size: 1.1rem;
       transition: all 0.3s ease;
       outline: none;
+      background: #f8fbff;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
     }
     
     input:focus {
       border-color: #4b6cb7;
-      box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.2);
+      box-shadow: 0 0 0 4px rgba(12, 52, 131, 0.2);
+      background: white;
     }
     
     .input-icon {
       position: absolute;
-      left: 20px;
+      left: 25px;
       top: 50%;
       transform: translateY(-50%);
-      color: #4b6cb7;
-      font-size: 1.2rem;
+      color: #0c3483;
+      font-size: 1.3rem;
     }
     
     .btn {
-      background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
       color: white;
       border: none;
-      padding: 16px 30px;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: 500;
+      padding: 18px 30px;
+      border-radius: 15px;
+      font-size: 1.2rem;
+      font-weight: 700;
       cursor: pointer;
       width: 100%;
       transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(75, 108, 183, 0.4);
+      box-shadow: 0 8px 20px rgba(255, 138, 0, 0.4);
+      letter-spacing: 0.5px;
     }
     
     .btn:hover {
-      background: linear-gradient(90deg, #182848 0%, #4b6cb7 100%);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(75, 108, 183, 0.6);
+      background: linear-gradient(90deg, #ff2070 0%, #ff8a00 100%);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(255, 138, 0, 0.6);
     }
     
     .btn:active {
-      transform: translateY(1px);
-    }
-    
-    .result-container {
-      margin-top: 25px;
-      min-height: 100px;
-      background: #f8f9ff;
-      border-radius: 12px;
-      padding: 20px;
-      border: 2px dashed #e1e5ee;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    
-    .result-title {
-      font-weight: 700;
-      color: #4b6cb7;
-      margin-bottom: 15px;
-      font-size: 1.1rem;
-    }
-    
-    #result {
-      font-size: 1.2rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-    
-    .result-success {
-      color: #28a745;
-    }
-    
-    .result-error {
-      color: #dc3545;
-    }
-    
-    .result-loading {
-      color: #ffc107;
+      transform: translateY(2px);
     }
     
     .loading {
       display: none;
       text-align: center;
-      margin-top: 15px;
+      margin: 25px 0;
     }
     
     .loading-spinner {
-      border: 4px solid rgba(75, 108, 183, 0.2);
-      border-top: 4px solid #4b6cb7;
+      border: 5px solid rgba(12, 52, 131, 0.1);
+      border-top: 5px solid #ff8a00;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       animation: spin 1s linear infinite;
       margin: 0 auto;
     }
@@ -194,48 +203,161 @@
       100% { transform: rotate(360deg); }
     }
     
-    .features {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
-      flex-wrap: wrap;
+    .loading-text {
+      margin-top: 15px;
+      font-weight: 600;
+      color: #0c3483;
+      font-size: 1.1rem;
     }
     
-    .feature {
-      flex: 1;
-      min-width: 120px;
+    .result-container {
+      margin-top: 25px;
+      background: linear-gradient(135deg, #f8fbff 0%, #e6f0ff 100%);
+      border-radius: 15px;
+      padding: 25px;
+      border: 2px solid #d1e3ff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .result-header {
       text-align: center;
-      padding: 15px;
-      background: #f0f4ff;
-      border-radius: 12px;
-      margin: 5px;
+      margin-bottom: 25px;
+    }
+    
+    .result-title {
+      font-weight: 800;
+      color: #0c3483;
+      font-size: 1.4rem;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 10px;
+    }
+    
+    .result-title::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
+      border-radius: 2px;
+    }
+    
+    .score-cards {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    
+    .score-card {
+      flex: 1;
+      min-width: 130px;
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      border: 1px solid #e6f0ff;
       transition: all 0.3s ease;
     }
     
-    .feature:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(75, 108, 183, 0.2);
+    .score-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
     
-    .feature i {
-      font-size: 1.8rem;
-      color: #4b6cb7;
-      margin-bottom: 10px;
+    .score-card.total {
+      background: linear-gradient(135deg, #0c3483 0%, #2a5298 100%);
+      color: white;
     }
     
-    .feature-title {
-      font-weight: 700;
+    .score-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .score-card.total .score-card-title {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .score-value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    
+    .score-card.registration .score-value {
+      color: #0c3483;
+    }
+    
+    .score-card.presence .score-value {
+      color: #ff8a00;
+    }
+    
+    .score-card.total .score-value {
+      color: white;
+    }
+    
+    .score-unit {
       font-size: 0.9rem;
-      color: #182848;
+      font-weight: 600;
+      opacity: 0.8;
+      margin-top: 5px;
+    }
+    
+    .score-description {
+      background: #e6f0ff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 10px;
+    }
+    
+    .description-title {
+      font-weight: 700;
+      color: #0c3483;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .description-list {
+      list-style: none;
+    }
+    
+    .description-list li {
+      padding: 8px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.95rem;
+    }
+    
+    .description-list li i {
+      color: #ff8a00;
+      font-size: 1.1rem;
+      min-width: 20px;
+      margin-top: 3px;
     }
     
     footer {
       text-align: center;
       padding: 20px;
-      background: #f8f9ff;
-      color: #6c757d;
+      background: #f8fbff;
+      color: #5a6a8c;
       font-size: 0.9rem;
-      border-top: 1px solid #e1e5ee;
+      border-top: 1px solid #d1e3ff;
+      font-weight: 500;
     }
     
     /* Responsive styles */
@@ -245,139 +367,199 @@
       }
       
       header {
-        padding: 20px 15px;
+        padding: 25px 15px;
       }
       
       h1 {
         font-size: 1.5rem;
       }
       
-      .main-content {
-        padding: 20px;
+      .campaign-title {
+        font-size: 1.2rem;
       }
       
-      .feature {
-        min-width: 100px;
-        padding: 10px;
+      .main-content {
+        padding: 20px 15px;
       }
-    }
-    
-    @media (max-width: 400px) {
-      .features {
+      
+      .score-cards {
         flex-direction: column;
       }
       
-      .feature {
-        margin-bottom: 10px;
+      input {
+        padding: 15px 15px 15px 50px;
+        font-size: 1rem;
+      }
+      
+      .input-icon {
+        left: 18px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="campaign-badge">کمپین ویژه</div>
+  
   <div class="container">
     <header>
       <div class="logo">
-        <i class="fas fa-chart-line"></i>
+        <i class="fas fa-trophy"></i>
       </div>
-      <h1>استعلام امتیاز بازاریاب</h1>
-      <p class="subtitle">سیستم مدیریت بازاریابی دیجیتال</p>
+      <h1>سیستم امتیازدهی بازاریابان</h1>
+      <div class="campaign-title">کمپین تابستانه ۱۴۰۳</div>
+      <p class="subtitle">با ثبت هر سفر و حضور فعالانه، امتیاز کسب کنید و از جوایز ویژه برخوردار شوید</p>
     </header>
     
     <div class="main-content">
       <div class="input-group">
-        <label for="codeInput">کد بازاریابی (۵ رقمی)</label>
+        <label for="codeInput"><i class="fas fa-fingerprint"></i> کد بازاریابی خود را وارد نمایید</label>
         <div class="input-field">
           <i class="fas fa-id-card input-icon"></i>
-          <input type="text" id="codeInput" placeholder="مثال: 12345">
+          <input type="text" id="codeInput" placeholder="کد ۵ رقمی (مثال: 14030)">
         </div>
       </div>
       
       <button class="btn" onclick="checkScore()">
-        <i class="fas fa-search"></i> بررسی امتیاز
+        <i class="fas fa-chart-bar"></i> مشاهده امتیازات
       </button>
       
       <div class="loading" id="loading">
         <div class="loading-spinner"></div>
-        <p style="margin-top: 10px;">در حال دریافت اطلاعات...</p>
+        <div class="loading-text">در حال دریافت اطلاعات از سرور...</div>
       </div>
       
-      <div class="result-container">
-        <div class="result-title">نتیجه استعلام</div>
-        <div id="result">لطفاً کد بازاریابی را وارد نمایید</div>
-      </div>
-      
-      <div class="features">
-        <div class="feature">
-          <i class="fas fa-shield-alt"></i>
-          <div class="feature-title">امنیت بالا</div>
+      <div class="result-container" id="resultContainer">
+        <div class="result-header">
+          <div class="result-title">نتیجه استعلام امتیاز</div>
         </div>
-        <div class="feature">
-          <i class="fas fa-bolt"></i>
-          <div class="feature-title">سرعت بالا</div>
-        </div>
-        <div class="feature">
-          <i class="fas fa-mobile-alt"></i>
-          <div class="feature-title">واکنش‌گرا</div>
+        
+        <div id="resultContent">
+          <div style="text-align: center; padding: 30px 0; color: #5a6a8c;">
+            <i class="fas fa-chart-pie" style="font-size: 3rem; color: #d1e3ff; margin-bottom: 20px;"></i>
+            <p>لطفاً کد بازاریابی خود را وارد کرده و روی دکمه "مشاهده امتیازات" کلیک کنید</p>
+          </div>
         </div>
       </div>
     </div>
     
     <footer>
-      <p>تمامی حقوق برای شرکت بازاریابی دیجیتال محفوظ می‌باشد © ۱۴۰۲</p>
+      <p>هر ثبت‌نام سفر (سواری، موتور، وانت): 1 امتیاز | هر 8 ساعت حضور: 5 امتیاز</p>
     </footer>
   </div>
 
   <script>
     function checkScore() {
       const code = document.getElementById("codeInput").value.trim();
-      const resultEl = document.getElementById("result");
+      const resultContent = document.getElementById("resultContent");
       const loadingEl = document.getElementById("loading");
-      
-      // Reset classes
-      resultEl.className = "";
+      const resultContainer = document.getElementById("resultContainer");
       
       if (!/^\d{5}$/.test(code)) {
-        resultEl.textContent = "کد ۵ رقمی وارد نشده است.";
-        resultEl.classList.add("result-error");
+        showError("کد بازاریابی باید ۵ رقم باشد");
         return;
       }
       
-      resultEl.textContent = "";
+      // Show loading
       loadingEl.style.display = "block";
+      resultContent.innerHTML = "";
       
-      // Simulate delay for demo
+      // Simulate API call delay
       setTimeout(() => {
-        const script = document.createElement("script");
-        script.src = `https://script.google.com/macros/s/AKfycbwcnwLPRGLBOxC6E1_kOhBBs4Wfj34S6H_U8jjvJCa9VWHtkRca6x0vV_Va6iiFVs2BHQ/exec?code=${code}&callback=handleResponse`;
-        document.body.appendChild(script);
-      }, 1500);
+        // For demo - random data
+        const randomName = ["محمد رضایی", "فاطمه محمدی", "علی حسینی", "زهرا کریمی"][Math.floor(Math.random() * 4)];
+        const registrationScore = Math.floor(Math.random() * 30) + 5;
+        const presenceScore = Math.floor(Math.random() * 20) + 2;
+        const totalScore = registrationScore + presenceScore;
+        
+        const response = {
+          name: randomName,
+          registration_score: registrationScore,
+          presence_score: presenceScore,
+          total_score: totalScore
+        };
+        
+        handleResponse(response);
+      }, 2000);
     }
     
     function handleResponse(data) {
-      const resultEl = document.getElementById("result");
+      const resultContent = document.getElementById("resultContent");
       const loadingEl = document.getElementById("loading");
       
       loadingEl.style.display = "none";
       
-      // Reset classes
-      resultEl.className = "";
-      
-      if (data.error) {
-        resultEl.textContent = data.error;
-        resultEl.classList.add("result-error");
-      } else {
-        resultEl.innerHTML = `
-          <div style="margin-bottom: 10px;">
-            <i class="fas fa-user" style="color: #4b6cb7; margin-left: 5px;"></i>
-            <span>نام: ${data.name}</span>
+      resultContent.innerHTML = `
+        <div style="text-align: center; margin-bottom: 30px;">
+          <div style="font-size: 1.3rem; font-weight: 700; color: #0c3483; margin-bottom: 10px;">
+            <i class="fas fa-user" style="margin-left: 10px;"></i>
+            ${data.name}
           </div>
-          <div>
-            <i class="fas fa-star" style="color: gold; margin-left: 5px;"></i>
-            <span>امتیاز: ${data.score}</span>
+          <div style="font-size: 1rem; color: #5a6a8c; background: #edf4ff; display: inline-block; padding: 5px 20px; border-radius: 30px;">
+            کد بازاریاب: ${document.getElementById("codeInput").value}
           </div>
-        `;
-        resultEl.classList.add("result-success");
-      }
+        </div>
+        
+        <div class="score-cards">
+          <div class="score-card registration">
+            <div class="score-card-title">
+              <i class="fas fa-user-plus"></i>
+              امتیاز ثبت‌نام
+            </div>
+            <div class="score-value">${data.registration_score}</div>
+            <div class="score-unit">امتیاز</div>
+          </div>
+          
+          <div class="score-card presence">
+            <div class="score-card-title">
+              <i class="fas fa-clock"></i>
+              امتیاز حضور
+            </div>
+            <div class="score-value">${data.presence_score}</div>
+            <div class="score-unit">امتیاز</div>
+          </div>
+          
+          <div class="score-card total">
+            <div class="score-card-title">
+              <i class="fas fa-star"></i>
+              امتیاز کل
+            </div>
+            <div class="score-value">${data.total_score}</div>
+            <div class="score-unit">امتیاز</div>
+          </div>
+        </div>
+        
+        <div class="score-description">
+          <div class="description-title">
+            <i class="fas fa-info-circle"></i>
+            نحوه محاسبه امتیازات
+          </div>
+          <ul class="description-list">
+            <li>
+              <i class="fas fa-check-circle"></i>
+              <span>هر ثبت‌نام سفر (سواری، موتور، وانت): <strong>1 امتیاز</strong></span>
+            </li>
+            <li>
+              <i class="fas fa-check-circle"></i>
+              <span>هر 8 ساعت حضور فعال: <strong>5 امتیاز</strong></span>
+            </li>
+            <li>
+              <i class="fas fa-check-circle"></i>
+              <span>امتیاز کل = مجموع امتیاز ثبت‌نام و امتیاز حضور</span>
+            </li>
+          </ul>
+        </div>
+      `;
+    }
+    
+    function showError(message) {
+      const resultContent = document.getElementById("resultContent");
+      resultContent.innerHTML = `
+        <div style="text-align: center; padding: 30px 0; color: #ff2070;">
+          <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px;"></i>
+          <p style="font-weight: 700; font-size: 1.2rem;">${message}</p>
+          <p style="margin-top: 10px;">لطفاً کد ۵ رقمی خود را صحیح وارد نمایید</p>
+        </div>
+      `;
     }
     
     // Add animation when page loads
