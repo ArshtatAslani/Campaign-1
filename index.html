@@ -415,7 +415,7 @@
         <label for="codeInput"><i class="fas fa-fingerprint"></i> کد بازاریابی خود را وارد نمایید</label>
         <div class="input-field">
           <i class="fas fa-id-card input-icon"></i>
-          <input type="text" id="codeInput" placeholder="کد ۵ رقمی (مثال: 14030)">
+          <input type="text" id="codeInput" placeholder="کد ۵ رقمی (مثال: 14030)" maxlength="5">
         </div>
       </div>
       
@@ -448,12 +448,15 @@
   </div>
 
   <script>
+    // Google Apps Script endpoint
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcnwLPRGLBOxC6E1_kOhBBs4Wfj34S6H_U8jjvJCa9VWHtkRca6x0vV_Va6iiFVs2BHQ/exec";
+    
     function checkScore() {
       const code = document.getElementById("codeInput").value.trim();
       const resultContent = document.getElementById("resultContent");
       const loadingEl = document.getElementById("loading");
-      const resultContainer = document.getElementById("resultContainer");
       
+      // Validate input
       if (!/^\d{5}$/.test(code)) {
         showError("کد بازاریابی باید ۵ رقم باشد");
         return;
@@ -463,31 +466,26 @@
       loadingEl.style.display = "block";
       resultContent.innerHTML = "";
       
-      // Simulate API call delay
-      setTimeout(() => {
-        // For demo - random data
-        const randomName = ["محمد رضایی", "فاطمه محمدی", "علی حسینی", "زهرا کریمی"][Math.floor(Math.random() * 4)];
-        const registrationScore = Math.floor(Math.random() * 30) + 5;
-        const presenceScore = Math.floor(Math.random() * 20) + 2;
-        const totalScore = registrationScore + presenceScore;
-        
-        const response = {
-          name: randomName,
-          registration_score: registrationScore,
-          presence_score: presenceScore,
-          total_score: totalScore
-        };
-        
-        handleResponse(response);
-      }, 2000);
+      // Create script element for JSONP
+      const script = document.createElement('script');
+      script.src = `${SCRIPT_URL}?code=${code}&callback=handleResponse`;
+      document.body.appendChild(script);
     }
     
     function handleResponse(data) {
       const resultContent = document.getElementById("resultContent");
       const loadingEl = document.getElementById("loading");
       
+      // Hide loading
       loadingEl.style.display = "none";
       
+      // Check for errors
+      if (data.error) {
+        showError(data.error);
+        return;
+      }
+      
+      // Render results
       resultContent.innerHTML = `
         <div style="text-align: center; margin-bottom: 30px;">
           <div style="font-size: 1.3rem; font-weight: 700; color: #0c3483; margin-bottom: 10px;">
@@ -505,7 +503,7 @@
               <i class="fas fa-user-plus"></i>
               امتیاز ثبت‌نام
             </div>
-            <div class="score-value">${data.registration_score}</div>
+            <div class="score-value">${data.signup_score}</div>
             <div class="score-unit">امتیاز</div>
           </div>
           
@@ -553,6 +551,10 @@
     
     function showError(message) {
       const resultContent = document.getElementById("resultContent");
+      const loadingEl = document.getElementById("loading");
+      
+      loadingEl.style.display = "none";
+      
       resultContent.innerHTML = `
         <div style="text-align: center; padding: 30px 0; color: #ff2070;">
           <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px;"></i>
@@ -561,6 +563,11 @@
         </div>
       `;
     }
+    
+    // Add input validation to allow only numbers
+    document.getElementById("codeInput").addEventListener("input", function() {
+      this.value = this.value.replace(/\D/g, '');
+    });
     
     // Add animation when page loads
     document.addEventListener('DOMContentLoaded', function() {
