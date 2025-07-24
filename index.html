@@ -366,7 +366,7 @@
       color: var(--secondary);
     }
     
-    .score-card.burn .score-value {
+    .score-card.spent .point-value {
       color: var(--accent);
     }
     
@@ -908,7 +908,7 @@
       loadingEl.style.display = "none";
       
       // اعتبارسنجی پیشرفته با فیلدهای واقعی
-      const requiredFields = ['name', 'score', 'signup_score', 'presence_score', 'request_count', 'burn_score'];
+      const requiredFields = ['name', 'score', 'signup_score', 'presence_score', 'request_count', 'spent_point'];
       const missingFields = requiredFields.filter(field => {
         return data[field] === undefined || data[field] === null;
       });
@@ -924,7 +924,7 @@
       const presenceScore = parseInt(data.presence_score) || 0;
       const totalScore = parseInt(data.score) || 0;
       const requestCount = parseInt(data.request_count) || 0;
-      const burnScore = parseInt(data.burn_score) || 0;
+      const spentPoint = parseInt(data.spent_point) || 0;
       
       // ذخیره اطلاعات کاربر
       userData = {
@@ -934,7 +934,7 @@
         presenceScore: presenceScore,
         totalScore: totalScore,
         requestCount: requestCount,
-        burnScore: burnScore
+        spentPoint: spentPoint
       };
       
       // نمایش نتایج
@@ -977,12 +977,12 @@
             <div class="score-unit">تعداد</div>
           </div>
           
-          <div class="score-card burn">
+          <div class="point-card spent">
             <div class="score-card-title">
               <i class="fas fa-coins"></i>
               امتیاز خرج شده
             </div>
-            <div class="score-value">${burnScore}</div>
+            <div class="score-value">${spentPoint}</div>
             <div class="score-unit">امتیاز</div>
           </div>
           
