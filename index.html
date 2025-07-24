@@ -490,13 +490,13 @@
       }
       
       // Validate data structure
-      if (!data.name || data.registration_score === undefined || data.presence_score === undefined) {
+      if (!data.name || data.signup_score === undefined || data.presence_score === undefined) {
         showError("داده‌های دریافتی ناقص هستند");
         return;
       }
       
       // Calculate total score
-      const totalScore = parseInt(data.registration_score) + parseInt(data.presence_score);
+      const totalScore = parseInt(data.signup_score) + parseInt(data.presence_score);
       
       // Render results
       resultContent.innerHTML = `
@@ -516,7 +516,7 @@
               <i class="fas fa-user-plus"></i>
               امتیاز ثبت‌نام
             </div>
-            <div class="score-value">${data.registration_score}</div>
+            <div class="score-value">${data.signup_score}</div>
             <div class="score-unit">امتیاز</div>
           </div>
           
