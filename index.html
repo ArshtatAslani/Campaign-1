@@ -268,6 +268,7 @@
       font-size: 1.1rem;
     }
     
+    /* استایل‌های بخش نتیجه استعلام با فونت کوچکتر */
     .result-container {
       margin-top: 25px;
       background: linear-gradient(135deg, var(--light) 0%, #e6f0ff 100%);
@@ -305,16 +306,13 @@
     }
     
     .score-cards {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 12px;
       margin-bottom: 20px;
     }
     
     .score-card {
-      flex: 1;
-      min-width: 110px;
       background: white;
       border-radius: 12px;
       padding: 15px;
@@ -322,6 +320,10 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
       border: 1px solid #e6f0ff;
       transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
     
     .score-card:hover {
@@ -332,16 +334,18 @@
     .score-card.total {
       background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
       color: white;
+      grid-column: span 2;
     }
     
     .score-card-title {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
+      text-align: center;
     }
     
     .score-card.score-card-title {
@@ -349,9 +353,9 @@
     }
     
     .score-value {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      line-height: 1;
+      line-height: 1.2;
     }
     
     .score-card.signup .score-value {
@@ -362,12 +366,20 @@
       color: var(--secondary);
     }
     
+    .score-card.burn .score-value {
+      color: var(--accent);
+    }
+    
+    .score-card.rewards .score-value {
+      color: #26d0ce;
+    }
+    
     .score-card.score-value {
       color: white;
     }
     
     .score-unit {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
       opacity: 0.8;
       margin-top: 3px;
@@ -384,7 +396,7 @@
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 12px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -405,7 +417,7 @@
     
     .description-list li i {
       color: var(--secondary);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       min-width: 18px;
       margin-top: 2px;
     }
@@ -680,7 +692,11 @@
       }
       
       .score-cards {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+      }
+      
+      .score-card.total {
+        grid-column: span 1;
       }
       
       input {
@@ -825,7 +841,7 @@
 
   <script>
     // Google Apps Script endpoint
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZzmxCbcROVU3P8QqEfo0lQL98jPSfKy8mGSZjdymlqC90dSc_3TPcJL0FbfF37dg9/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwWCrgcDUHF7tgYpMEBDFmWBfuiCOe3aIUotJMGe3jOQY195Z28myrAQJ_ER5_bQ-x3Tw/exec";
     
     // اطلاعات کاربر
     let userData = null;
@@ -892,7 +908,7 @@
       loadingEl.style.display = "none";
       
       // اعتبارسنجی پیشرفته با فیلدهای واقعی
-      const requiredFields = ['name', 'score', 'signup_score', 'presence_score'];
+      const requiredFields = ['name', 'score', 'signup_score', 'presence_score', 'request_count', 'burn_score'];
       const missingFields = requiredFields.filter(field => {
         return data[field] === undefined || data[field] === null;
       });
@@ -907,6 +923,8 @@
       const signupScore = parseInt(data.signup_score) || 0;
       const presenceScore = parseInt(data.presence_score) || 0;
       const totalScore = parseInt(data.score) || 0;
+      const requestCount = parseInt(data.request_count) || 0;
+      const burnScore = parseInt(data.burn_score) || 0;
       
       // ذخیره اطلاعات کاربر
       userData = {
@@ -914,7 +932,9 @@
         code: data.code || document.getElementById("codeInput").value,
         signupScore: signupScore,
         presenceScore: presenceScore,
-        totalScore: totalScore
+        totalScore: totalScore,
+        requestCount: requestCount,
+        burnScore: burnScore
       };
       
       // نمایش نتایج
@@ -945,6 +965,24 @@
               امتیاز حضور
             </div>
             <div class="score-value">${presenceScore}</div>
+            <div class="score-unit">امتیاز</div>
+          </div>
+          
+          <div class="score-card rewards">
+            <div class="score-card-title">
+              <i class="fas fa-gift"></i>
+              جوایز دریافتی
+            </div>
+            <div class="score-value">${requestCount}</div>
+            <div class="score-unit">تعداد</div>
+          </div>
+          
+          <div class="score-card burn">
+            <div class="score-card-title">
+              <i class="fas fa-coins"></i>
+              امتیاز خرج شده
+            </div>
+            <div class="score-value">${burnScore}</div>
             <div class="score-unit">امتیاز</div>
           </div>
           
