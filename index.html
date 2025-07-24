@@ -848,7 +848,7 @@
     let currentPrize = "";
     let canSpinAgain = true;
     
-    // مقداردهی اولیه چرخ‌شانس هنگام بارگذاری صفحه
+    // مقداردهی اولیه ‌گردانه شانس هنگام بارگذاری صفحه
     document.addEventListener('DOMContentLoaded', function() {
       initWheel();
       
@@ -1083,7 +1083,7 @@
       }
     });
     
-    // چرخ‌شانس با 8 بخش
+    // گردانه شانس با 8 بخش
     const wheel = {
       canvas: null,
       ctx: null,
@@ -1116,7 +1116,7 @@
       const spinButton = document.createElement('button');
       spinButton.className = 'btn spin-btn';
       spinButton.id = 'spinButton';
-      spinButton.innerHTML = '<i class="fas fa-redo"></i> چرخش گردانه شانس';
+      spinButton.innerHTML = '<i class="fas fa-redo"></i> چرخاندن گردانه';
       spinButton.onclick = spinWheel;
       spinButton.disabled = true;
       
@@ -1136,7 +1136,7 @@
         const startAngle = i * 2 * Math.PI / wheel.segments + wheel.angle;
         const endAngle = (i + 1) * 2 * Math.PI / wheel.segments + wheel.angle;
 
-        // رسم بخش‌های چرخ
+        // رسم بخش‌های گردانه
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
         ctx.arc(centerX, centerY, radius, startAngle, endAngle);
