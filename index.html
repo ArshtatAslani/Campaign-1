@@ -815,7 +815,6 @@
           </div>
           <canvas id="wheelCanvas" width="300" height="300"></canvas>
         </div>
-        <div class="wheel-cost">هر چرخش 5 امتیاز کسر می‌شود</div>
         <div class="wheel-result" id="wheelResult"></div>
       </div>
       
@@ -1120,8 +1119,9 @@
       spinButton.onclick = spinWheel;
       spinButton.disabled = true;
       
-      const costDiv = document.querySelector('.wheel-cost');
-      wheelContainer.insertBefore(spinButton, costDiv.nextSibling);
+      // تغییر در نحوه درج دکمه چرخش
+      const wheelWrapper = document.querySelector('.wheel-wrapper');
+      wheelContainer.insertBefore(spinButton, wheelWrapper.nextSibling);
     }
 
     function drawWheel() {
