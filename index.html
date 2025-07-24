@@ -1,17 +1,3 @@
-این کد خیلی شلوغ شده.
-تغییرات زیر رو لحاظ کن:
-1- ری دیزاین کامل استایل ها و فیلدها
-2- فیلد کد ملی زمانی نمایش داده بشه که امتیاز مشخص شده و زیر گردونه بنویس که برای خرج امتیاز کد ملی خود را وارد نمایید
-3- جوایز گردونه به شرح زیر هست
-- طرح ساعتی 18 تا 20؛ هر ثبت نام 100 هزار تومان پاداش اضافه تر
-- طرح ساعتی 8 صبح تا 10 صبح؛ هر ثبت نام 100 هزار تومان پاداش اضافه تر
-- طرح روز جمعه به ازای هر ثبت نام 200 هزار تومان پاداش اضافه تر
-- 5 امتیاز
-- 20 امتیاز
-- بن خرید سوپرمارکت به ارزش 500 هزار تومان
-- بن خرید تعویض روغن به ارزش 500 هزار تومان
-- پوچ 
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -20,6 +6,21 @@
   <title>چرخ شانس بازاریابان | استعلام امتیاز</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #1a2980;
+      --primary-dark: #0c1c5e;
+      --primary-light: #2a3d9e;
+      --secondary: #ff8a00;
+      --secondary-dark: #e67a00;
+      --accent: #ff2070;
+      --accent-light: #ff4d8c;
+      --light: #f8fbff;
+      --dark: #0c0f2b;
+      --success: #26d0ce;
+      --gray: #5a6a8c;
+      --light-gray: #d1e3ff;
+    }
+    
     * {
       margin: 0;
       padding: 0;
@@ -28,13 +29,13 @@
     }
     
     body {
-      background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--success) 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      color: #333;
+      color: var(--dark);
       line-height: 1.6;
     }
     
@@ -42,7 +43,7 @@
       position: absolute;
       top: 20px;
       right: 20px;
-      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
       color: white;
       padding: 8px 20px;
       border-radius: 30px;
@@ -76,7 +77,7 @@
     }
     
     header {
-      background: linear-gradient(90deg, #0c3483 0%, #2a5298 100%);
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-light) 100%);
       color: white;
       text-align: center;
       padding: 30px 20px;
@@ -136,7 +137,7 @@
       display: block;
       margin-bottom: 10px;
       font-weight: 600;
-      color: #0c3483;
+      color: var(--primary);
       font-size: 1.1rem;
       display: flex;
       align-items: center;
@@ -151,17 +152,17 @@
     input {
       width: 100%;
       padding: 17px 20px 17px 60px;
-      border: 2px solid #d1e3ff;
+      border: 2px solid var(--light-gray);
       border-radius: 15px;
       font-size: 1.1rem;
       transition: all 0.3s ease;
       outline: none;
-      background: #f8fbff;
+      background: var(--light);
       box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
     }
     
     input:focus {
-      border-color: #4b6cb7;
+      border-color: var(--primary);
       box-shadow: 0 0 0 4px rgba(12, 52, 131, 0.2);
       background: white;
     }
@@ -171,12 +172,12 @@
       left: 25px;
       top: 50%;
       transform: translateY(-50%);
-      color: #0c3483;
+      color: var(--primary);
       font-size: 1.3rem;
     }
     
     .btn {
-      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
       color: white;
       border: none;
       padding: 18px 30px;
@@ -195,7 +196,7 @@
     }
     
     .btn:hover {
-      background: linear-gradient(90deg, #ff2070 0%, #ff8a00 100%);
+      background: linear-gradient(90deg, var(--accent) 0%, var(--secondary) 100%);
       transform: translateY(-5px);
       box-shadow: 0 12px 25px rgba(255, 138, 0, 0.6);
     }
@@ -219,7 +220,7 @@
     
     .loading-spinner {
       border: 5px solid rgba(12, 52, 131, 0.1);
-      border-top: 5px solid #ff8a00;
+      border-top: 5px solid var(--secondary);
       border-radius: 50%;
       width: 50px;
       height: 50px;
@@ -235,16 +236,16 @@
     .loading-text {
       margin-top: 15px;
       font-weight: 600;
-      color: #0c3483;
+      color: var(--primary);
       font-size: 1.1rem;
     }
     
     .result-container {
       margin-top: 25px;
-      background: linear-gradient(135deg, #f8fbff 0%, #e6f0ff 100%);
+      background: linear-gradient(135deg, var(--light) 0%, #e6f0ff 100%);
       border-radius: 15px;
       padding: 25px;
-      border: 2px solid #d1e3ff;
+      border: 2px solid var(--light-gray);
       box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     }
     
@@ -255,7 +256,7 @@
     
     .result-title {
       font-weight: 800;
-      color: #0c3483;
+      color: var(--primary);
       font-size: 1.4rem;
       position: relative;
       display: inline-block;
@@ -270,7 +271,7 @@
       transform: translateX(-50%);
       width: 80px;
       height: 4px;
-      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
       border-radius: 2px;
     }
     
@@ -300,7 +301,7 @@
     }
     
     .score-card.total {
-      background: linear-gradient(135deg, #0c3483 0%, #2a5298 100%);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
       color: white;
     }
     
@@ -325,11 +326,11 @@
     }
     
     .score-card.signup .score-value {
-      color: #0c3483;
+      color: var(--primary);
     }
     
     .score-card.presence .score-value {
-      color: #ff8a00;
+      color: var(--secondary);
     }
     
     .score-card.score-value {
@@ -352,7 +353,7 @@
     
     .description-title {
       font-weight: 700;
-      color: #0c3483;
+      color: var(--primary);
       margin-bottom: 15px;
       font-size: 1.1rem;
       display: flex;
@@ -373,7 +374,7 @@
     }
     
     .description-list li i {
-      color: #ff8a00;
+      color: var(--secondary);
       font-size: 1.1rem;
       min-width: 20px;
       margin-top: 3px;
@@ -387,6 +388,7 @@
       background: white;
       border-radius: 20px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      display: none;
     }
     
     .wheel-header {
@@ -395,7 +397,7 @@
     
     .wheel-title {
       font-weight: 800;
-      color: #0c3483;
+      color: var(--primary);
       font-size: 1.6rem;
       position: relative;
       display: inline-block;
@@ -410,12 +412,12 @@
       transform: translateX(-50%);
       width: 120px;
       height: 5px;
-      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
       border-radius: 3px;
     }
     
     .wheel-subtitle {
-      color: #5a6a8c;
+      color: var(--gray);
       margin-top: 10px;
       font-size: 1.1rem;
     }
@@ -433,7 +435,7 @@
       margin: 0 auto;
       border-radius: 50%;
       box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
-      border: 8px solid #0c3483;
+      border: 8px solid var(--primary);
     }
     
     .wheel-pointer {
@@ -444,7 +446,7 @@
       width: 50px;
       height: 50px;
       z-index: 10;
-      color: #ff2070;
+      color: var(--accent);
       font-size: 3rem;
       text-shadow: 0 0 15px rgba(255, 32, 112, 0.6);
       filter: drop-shadow(0 5px 3px rgba(0,0,0,0.2));
@@ -459,7 +461,7 @@
     
     .wheel-cost {
       margin-top: 10px;
-      color: #ff2070;
+      color: var(--accent);
       font-weight: 700;
       font-size: 1rem;
       background: rgba(255, 32, 112, 0.1);
@@ -471,7 +473,7 @@
     .wheel-result {
       margin-top: 20px;
       padding: 15px 25px;
-      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
       color: white;
       border-radius: 30px;
       font-weight: 700;
@@ -485,14 +487,14 @@
       padding: 15px;
       background: #f0f8ff;
       border-radius: 15px;
-      border: 2px dashed #4b6cb7;
+      border: 2px dashed var(--primary);
       display: none;
     }
     
     .form-submit-title {
       text-align: center;
       font-weight: 700;
-      color: #0c3483;
+      color: var(--primary);
       margin-bottom: 15px;
       display: flex;
       align-items: center;
@@ -501,7 +503,7 @@
     }
     
     .submit-btn {
-      background: linear-gradient(90deg, #0c3483 0%, #2a5298 100%);
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-light) 100%);
       color: white;
       border: none;
       padding: 15px 25px;
@@ -519,18 +521,39 @@
     }
     
     .submit-btn:hover {
-      background: linear-gradient(90deg, #2a5298 0%, #0c3483 100%);
+      background: linear-gradient(90deg, var(--primary-light) 0%, var(--primary-dark) 100%);
       transform: translateY(-3px);
       box-shadow: 0 8px 20px rgba(12, 52, 131, 0.4);
+    }
+    
+    .national-code-section {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background: linear-gradient(135deg, #f8fbff 0%, #e6f0ff 100%);
+      border-radius: 15px;
+      border: 2px solid var(--light-gray);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .national-code-title {
+      text-align: center;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
     
     footer {
       text-align: center;
       padding: 20px;
-      background: #f8fbff;
-      color: #5a6a8c;
+      background: var(--light);
+      color: var(--gray);
       font-size: 0.9rem;
-      border-top: 1px solid #d1e3ff;
+      border-top: 1px solid var(--light-gray);
       font-weight: 500;
     }
     
@@ -609,31 +632,7 @@
     </header>
     
     <div class="main-content">
-      <!-- نمایش همزمان چرخ‌شانس و فرم ورود اطلاعات -->
-      <div class="wheel-container">
-        <div class="wheel-header">
-          <div class="wheel-title">چرخ شانس</div>
-          <div class="wheel-subtitle">برای شرکت در قرعه‌کشی ابتدا اطلاعات خود را وارد کنید</div>
-        </div>
-        <div class="wheel-wrapper">
-          <div class="wheel-pointer">
-            <i class="fas fa-caret-down"></i>
-          </div>
-          <canvas id="wheelCanvas" width="300" height="300"></canvas>
-        </div>
-        <div class="wheel-cost">هر چرخش 5 امتیاز کسر می‌شود</div>
-        <div class="wheel-result" id="wheelResult"></div>
-      </div>
-      
       <div class="input-group">
-        <label for="nationalCodeInput">
-          <i class="fas fa-id-card"></i> کد ملی خود را وارد نمایید
-        </label>
-        <div class="input-field">
-          <i class="fas fa-user input-icon"></i>
-          <input type="text" id="nationalCodeInput" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
-        </div>
-        
         <label for="codeInput">
           <i class="fas fa-fingerprint"></i> کد بازاریابی خود را وارد نمایید
         </label>
@@ -663,6 +662,33 @@
             <p>لطفاً کد بازاریابی خود را وارد کرده و روی دکمه "مشاهده امتیازات" کلیک کنید</p>
           </div>
         </div>
+      </div>
+      
+      <!-- بخش جدید کد ملی برای خرج امتیاز -->
+      <div class="national-code-section" id="nationalCodeSection">
+        <div class="national-code-title">
+          <i class="fas fa-id-card"></i> برای خرج امتیاز کد ملی خود را وارد نمایید
+        </div>
+        <div class="input-field">
+          <i class="fas fa-user input-icon"></i>
+          <input type="text" id="nationalCodeInput" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
+        </div>
+      </div>
+      
+      <!-- چرخ‌شانس -->
+      <div class="wheel-container" id="wheelContainer">
+        <div class="wheel-header">
+          <div class="wheel-title">چرخ شانس</div>
+          <div class="wheel-subtitle">هر چرخش ۵ امتیاز از حساب شما کسر خواهد شد</div>
+        </div>
+        <div class="wheel-wrapper">
+          <div class="wheel-pointer">
+            <i class="fas fa-caret-down"></i>
+          </div>
+          <canvas id="wheelCanvas" width="300" height="300"></canvas>
+        </div>
+        <div class="wheel-cost">هر چرخش 5 امتیاز کسر می‌شود</div>
+        <div class="wheel-result" id="wheelResult"></div>
       </div>
       
       <div class="form-submit-container" id="formSubmitContainer">
@@ -703,17 +729,11 @@
     });
     
     function checkScore() {
-      const nationalCode = document.getElementById("nationalCodeInput").value.trim();
       const code = document.getElementById("codeInput").value.trim();
       const resultContent = document.getElementById("resultContent");
       const loadingEl = document.getElementById("loading");
       
       // اعتبارسنجی ورودی‌ها
-      if (!/^\d{10}$/.test(nationalCode)) {
-        showError("کد ملی باید ۱۰ رقم باشد");
-        return;
-      }
-      
       if (!/^\d{5}$/.test(code)) {
         showError("کد بازاریابی باید ۵ رقم باشد");
         return;
@@ -760,7 +780,6 @@
       // ذخیره اطلاعات کاربر
       userData = {
         name: data.name,
-        nationalCode: document.getElementById("nationalCodeInput").value,
         code: data.code || document.getElementById("codeInput").value,
         signupScore: signupScore,
         presenceScore: presenceScore,
@@ -830,6 +849,10 @@
         </div>
       `;
       
+      // نمایش بخش کد ملی و چرخ شانس
+      document.getElementById("nationalCodeSection").style.display = "block";
+      document.getElementById("wheelContainer").style.display = "block";
+      
       // فعال/غیرفعال کردن دکمه چرخش بر اساس امتیاز کاربر
       updateSpinButtonState();
     }
@@ -857,17 +880,17 @@
     }
     
     // اعتبارسنجی ورودی‌ها
-    document.getElementById("nationalCodeInput").addEventListener("input", function() {
-      this.value = this.value.replace(/\D/g, '');
-      if (this.value.length > 10) {
-        this.value = this.value.slice(0, 10);
-      }
-    });
-    
     document.getElementById("codeInput").addEventListener("input", function() {
       this.value = this.value.replace(/\D/g, '');
       if (this.value.length > 5) {
         this.value = this.value.slice(0, 5);
+      }
+    });
+    
+    document.getElementById("nationalCodeInput").addEventListener("input", function() {
+      this.value = this.value.replace(/\D/g, '');
+      if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
       }
     });
     
@@ -877,13 +900,18 @@
       ctx: null,
       segments: 8,
       prizes: [
-        "100 امتیاز", "50 امتیاز", "200 امتیاز", 
-        "10 امتیاز", "500 امتیاز", "20 امتیاز", 
-        "300 امتیاز", "150 امتیاز"
+        "طرح ساعتی 18 تا 20 (100 هزار تومان)",
+        "طرح ساعتی 8 تا 10 (100 هزار تومان)",
+        "طرح جمعه (200 هزار تومان)",
+        "5 امتیاز",
+        "20 امتیاز",
+        "بن سوپرمارکت 500 هزار تومان",
+        "بن تعویض روغن 500 هزار تومان",
+        "پوچ"
       ],
       colors: [
-        "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", 
-        "#9966FF", "#FF9F40", "#C9CBCF", "#7EBE37"
+        "#FF6B6B", "#4ECDC4", "#45B7D1", "#FFBE0B", 
+        "#FB5607", "#8338EC", "#3A86FF", "#FF006E"
       ],
       angle: 0,
       spinning: false
@@ -936,7 +964,7 @@
         ctx.rotate(startAngle + (Math.PI / wheel.segments));
         ctx.textAlign = 'right';
         ctx.fillStyle = 'white';
-        ctx.font = 'bold 14px Arial';
+        ctx.font = 'bold 12px Arial';
         ctx.fillText(wheel.prizes[i], radius - 15, 5);
         ctx.restore();
       }
@@ -963,6 +991,17 @@
 
       // پنهان کردن فرم ارسال اطلاعات
       document.getElementById("formSubmitContainer").style.display = "none";
+      
+      // اعتبارسنجی کد ملی
+      const nationalCode = document.getElementById("nationalCodeInput").value.trim();
+      if (!/^\d{10}$/.test(nationalCode)) {
+        wheelResult.innerHTML = "لطفاً کد ملی معتبر وارد کنید";
+        wheelResult.style.display = "block";
+        return;
+      }
+      
+      // ذخیره کد ملی در اطلاعات کاربر
+      userData.nationalCode = nationalCode;
       
       // بررسی اطلاعات کاربر و امتیاز کافی
       if (!userData) {
