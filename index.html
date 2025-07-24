@@ -50,7 +50,7 @@
       border-radius: 20px;
       box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
       width: 100%;
-      max-width: 500px;
+      max-width: 900px;
       overflow: hidden;
       position: relative;
       transform: translateY(0);
@@ -111,6 +111,19 @@
     
     .main-content {
       padding: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    
+    .form-section {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .wheel-section {
+      flex: 1;
+      min-width: 300px;
     }
     
     .input-group {
@@ -368,11 +381,12 @@
     /* استایل‌های چرخ‌شانس */
     .wheel-container {
       text-align: center;
-      margin: 30px 0;
+      margin-top: 20px;
       padding: 20px;
       background: white;
       border-radius: 20px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      border: 2px solid #e6f0ff;
     }
     
     .wheel-header {
@@ -531,6 +545,39 @@
       animation: winPulse 0.5s ease-in-out 3;
     }
     
+    .section-title {
+      font-weight: 700;
+      color: #0c3483;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      position: relative;
+      padding-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
+      border-radius: 2px;
+    }
+    
+    @media (max-width: 900px) {
+      .main-content {
+        flex-direction: column;
+      }
+      
+      .wheel-section {
+        order: -1;
+      }
+    }
+    
     @media (max-width: 600px) {
       .container {
         margin: 10px;
@@ -595,43 +642,110 @@
     </header>
     
     <div class="main-content">
-      <div class="input-group">
-        <label for="nationalCodeInput">
-          <i class="fas fa-id-card"></i> کد ملی خود را وارد نمایید
-        </label>
-        <div class="input-field">
-          <i class="fas fa-user input-icon"></i>
-          <input type="text" id="nationalCodeInput" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
+      <!-- بخش فرم ورود اطلاعات -->
+      <div class="form-section">
+        <div class="section-title">
+          <i class="fas fa-id-card"></i> ورود اطلاعات
         </div>
         
-        <label for="codeInput">
-          <i class="fas fa-fingerprint"></i> کد بازاریابی خود را وارد نمایید
-        </label>
-        <div class="input-field">
-          <i class="fas fa-key input-icon"></i>
-          <input type="text" id="codeInput" placeholder="کد ۵ رقمی (مثال: 14030)" maxlength="5">
-        </div>
-      </div>
-      
-      <button class="btn" onclick="checkScore()">
-        <i class="fas fa-chart-bar"></i> مشاهده امتیازات
-      </button>
-      
-      <div class="loading" id="loading">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">در حال دریافت اطلاعات از سرور...</div>
-      </div>
-      
-      <div class="result-container" id="resultContainer">
-        <div class="result-header">
-          <div class="result-title">نتیجه استعلام امتیاز</div>
-        </div>
-        
-        <div id="resultContent">
-          <div style="text-align: center; padding: 30px 0; color: #5a6a8c;">
-            <i class="fas fa-chart-pie" style="font-size: 3rem; color: #d1e3ff; margin-bottom: 20px;"></i>
-            <p>لطفاً کد بازاریابی خود را وارد کرده و روی دکمه "مشاهده امتیازات" کلیک کنید</p>
+        <div class="input-group">
+          <label for="nationalCodeInput">
+            <i class="fas fa-id-card"></i> کد ملی خود را وارد نمایید
+          </label>
+          <div class="input-field">
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" id="nationalCodeInput" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
           </div>
+          
+          <label for="codeInput">
+            <i class="fas fa-fingerprint"></i> کد بازاریابی خود را وارد نمایید
+          </label>
+          <div class="input-field">
+            <i class="fas fa-key input-icon"></i>
+            <input type="text" id="codeInput" placeholder="کد ۵ رقمی (مثال: 14030)" maxlength="5">
+          </div>
+        </div>
+        
+        <button class="btn" onclick="checkScore()">
+          <i class="fas fa-chart-bar"></i> مشاهده امتیازات
+        </button>
+        
+        <div class="loading" id="loading">
+          <div class="loading-spinner"></div>
+          <div class="loading-text">در حال دریافت اطلاعات از سرور...</div>
+        </div>
+        
+        <div class="result-container" id="resultContainer">
+          <div class="result-header">
+            <div class="result-title">نتیجه استعلام امتیاز</div>
+          </div>
+          
+          <div id="resultContent">
+            <div style="text-align: center; padding: 30px 0; color: #5a6a8c;">
+              <i class="fas fa-chart-pie" style="font-size: 3rem; color: #d1e3ff; margin-bottom: 20px;"></i>
+              <p>لطفاً کد بازاریابی خود را وارد کرده و روی دکمه "مشاهده امتیازات" کلیک کنید</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- بخش چرخ شانس -->
+      <div class="wheel-section">
+        <div class="section-title">
+          <i class="fas fa-gift"></i> چرخ شانس جایزه
+        </div>
+        
+        <div class="wheel-container">
+          <div class="wheel-header">
+            <div class="wheel-title">چرخ شانس</div>
+            <div class="wheel-subtitle">با هر چرخش شانس خود را برای برنده شدن امتحان کنید</div>
+          </div>
+          <div class="wheel-wrapper">
+            <div class="wheel-pointer">
+              <i class="fas fa-caret-down"></i>
+            </div>
+            <canvas id="wheelCanvas" width="300" height="300"></canvas>
+          </div>
+          <button class="btn spin-btn" id="spinButton" onclick="spinWheel()" disabled>
+            <i class="fas fa-redo"></i> چرخش چرخ شانس
+          </button>
+          <div class="wheel-cost">هر چرخش 5 امتیاز کسر می‌شود</div>
+          <div class="wheel-result" id="wheelResult">لطفاً ابتدا اطلاعات خود را وارد کنید</div>
+          
+          <div class="form-submit-container" id="formSubmitContainer">
+            <div class="form-submit-title">
+              <i class="fas fa-file-alt"></i>
+              ثبت اطلاعات جایزه در سیستم
+            </div>
+            <p style="text-align: center; margin-bottom: 15px; color: #5a6a8c;">
+              لطفاً برای ثبت جایزه خود روی دکمه زیر کلیک کنید
+            </p>
+            <button class="submit-btn" onclick="submitPrizeToForm()">
+              <i class="fas fa-paper-plane"></i>
+              ارسال اطلاعات جایزه
+            </button>
+          </div>
+        </div>
+        
+        <div class="score-description">
+          <div class="description-title">
+            <i class="fas fa-info-circle"></i>
+            نحوه محاسبه امتیازات
+          </div>
+          <ul class="description-list">
+            <li>
+              <i class="fas fa-check-circle"></i>
+              <span>هر ثبت‌نام سفر (سواری، موتور، وانت): <strong>1 امتیاز</strong></span>
+            </li>
+            <li>
+              <i class="fas fa-check-circle"></i>
+              <span>هر 8 ساعت حضور فعال: <strong>5 امتیاز</strong></span>
+            </li>
+            <li>
+              <i class="fas fa-check-circle"></i>
+              <span>امتیاز کل = مجموع امتیاز ثبت‌نام و امتیاز حضور</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -648,7 +762,7 @@
     // اطلاعات کاربر
     let userData = null;
     let currentPrize = "";
-    let canSpinAgain = true;
+    let canSpinAgain = false;
     
     function checkScore() {
       const nationalCode = document.getElementById("nationalCodeInput").value.trim();
@@ -755,66 +869,16 @@
             <div class="score-unit">امتیاز</div>
           </div>
         </div>
-        
-        <div class="wheel-container">
-          <div class="wheel-header">
-            <div class="wheel-title">چرخ شانس</div>
-            <div class="wheel-subtitle">با هر چرخش شانس خود را برای برنده شدن امتحان کنید</div>
-          </div>
-          <div class="wheel-wrapper">
-            <div class="wheel-pointer">
-              <i class="fas fa-caret-down"></i>
-            </div>
-            <canvas id="wheelCanvas" width="300" height="300"></canvas>
-          </div>
-          <button class="btn spin-btn" id="spinButton" onclick="spinWheel()">
-            <i class="fas fa-redo"></i> چرخش چرخ شانس
-          </button>
-          <div class="wheel-cost">هر چرخش 5 امتیاز کسر می‌شود</div>
-          <div class="wheel-result" id="wheelResult"></div>
-          
-          <div class="form-submit-container" id="formSubmitContainer">
-            <div class="form-submit-title">
-              <i class="fas fa-file-alt"></i>
-              ثبت اطلاعات جایزه در سیستم
-            </div>
-            <p style="text-align: center; margin-bottom: 15px; color: #5a6a8c;">
-              لطفاً برای ثبت جایزه خود روی دکمه زیر کلیک کنید
-            </p>
-            <button class="submit-btn" onclick="submitPrizeToForm()">
-              <i class="fas fa-paper-plane"></i>
-              ارسال اطلاعات جایزه
-            </button>
-          </div>
-        </div>
-        
-        <div class="score-description">
-          <div class="description-title">
-            <i class="fas fa-info-circle"></i>
-            نحوه محاسبه امتیازات
-          </div>
-          <ul class="description-list">
-            <li>
-              <i class="fas fa-check-circle"></i>
-              <span>هر ثبت‌نام سفر (سواری، موتور، وانت): <strong>1 امتیاز</strong></span>
-            </li>
-            <li>
-              <i class="fas fa-check-circle"></i>
-              <span>هر 8 ساعت حضور فعال: <strong>5 امتیاز</strong></span>
-            </li>
-            <li>
-              <i class="fas fa-check-circle"></i>
-              <span>امتیاز کل = مجموع امتیاز ثبت‌نام و امتیاز حضور</span>
-            </li>
-          </ul>
-        </div>
       `;
       
-      // مقداردهی اولیه چرخ‌شانس
-      initWheel();
-      
-      // فعال/غیرفعال کردن دکمه چرخش بر اساس امتیاز کاربر
+      // فعال کردن دکمه چرخش
+      canSpinAgain = true;
       updateSpinButtonState();
+      
+      // نمایش نتیجه چرخ شانس
+      document.getElementById("wheelResult").innerHTML = "برای چرخش چرخ شانس آماده هستید!";
+      document.getElementById("wheelResult").style.display = "block";
+      document.getElementById("wheelResult").style.background = "linear-gradient(90deg, #0c3483 0%, #2a5298 100%)";
     }
     
     function updateSpinButtonState() {
@@ -859,6 +923,9 @@
       setTimeout(() => {
         document.querySelector('.container').style.opacity = 1;
       }, 100);
+      
+      // مقداردهی اولیه چرخ‌شانس
+      initWheel();
     });
     
     // چرخ‌شانس با 8 بخش
@@ -1014,7 +1081,7 @@
     function submitPrizeToForm() {
       if (!userData || !currentPrize) return;
       
-      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdXcCj9mK2d7T1JQ5fJ2V1UoYwLxKjLxV6o6ZvY7Qb5Q9wYw/formResponse";
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeVM6KF12vzBeIDYLecG4dB7sls026fzAvE0zllAmy9g-9gig/formResponse";
       
       // دکمه را غیرفعال کن تا از ارسال مکرر جلوگیری شود
       const submitBtn = document.querySelector('.submit-btn');
