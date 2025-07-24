@@ -350,6 +350,24 @@
       margin-top: 3px;
     }
     
+    .debug-info {
+      background: #f0f4ff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: #5a6a8c;
+      display: none;
+    }
+    
+    .debug-toggle {
+      color: #0c3483;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 10px;
+    }
+    
     footer {
       text-align: center;
       padding: 20px;
@@ -439,6 +457,18 @@
             <p>لطفاً کد بازاریابی خود را وارد کرده و روی دکمه "مشاهده امتیازات" کلیک کنید</p>
           </div>
         </div>
+        
+        <div class="debug-info" id="debugInfo">
+          <div class="description-title">
+            <i class="fas fa-bug"></i>
+            اطلاعات دیباگ
+          </div>
+          <pre id="debugData"></pre>
+        </div>
+        
+        <div class="debug-toggle" id="debugToggle" onclick="toggleDebug()">
+          نمایش اطلاعات دیباگ
+        </div>
       </div>
     </div>
     
@@ -449,24 +479,31 @@
 
   <script>
     // Google Apps Script endpoint
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcnwLPRGLBOxC6E1_kOhBBs4Wfj34S6H_U8jjvJCa9VWHtkRca6x0vV_Va6iiFVs2BHQ/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZzmxCbcROVU3P8QqEfo0lQL98jPSfKy8mGSZjdymlqC90dSc_3TPcJL0FbfF37dg9/exec";
+    
+    // برای ذخیره داده‌های دریافتی
+    let lastResponse = null;
     
     function checkScore() {
       const code = document.getElementById("codeInput").value.trim();
       const resultContent = document.getElementById("resultContent");
       const loadingEl = document.getElementById("loading");
+      const debugInfo = document.getElementById("debugInfo");
       
-      // Validate input
+      // پنهان کردن اطلاعات دیباگ
+      debugInfo.style.display = "none";
+      
+      // اعتبارسنجی ورودی
       if (!/^\d{5}$/.test(code)) {
         showError("کد بازاریابی باید ۵ رقم باشد");
         return;
       }
       
-      // Show loading
+      // نمایش وضعیت بارگذاری
       loadingEl.style.display = "block";
       resultContent.innerHTML = "";
       
-      // Create script element for JSONP
+      // ایجاد درخواست JSONP
       const script = document.createElement('script');
       script.src = `${SCRIPT_URL}?code=${code}&callback=handleResponse`;
       script.onerror = function() {
@@ -479,26 +516,33 @@
     function handleResponse(data) {
       const resultContent = document.getElementById("resultContent");
       const loadingEl = document.getElementById("loading");
+      const debugData = document.getElementById("debugData");
       
-      // Hide loading
+      // ذخیره داده‌های دریافتی برای دیباگ
+      lastResponse = data;
+      debugData.textContent = JSON.stringify(data, null, 2);
+      
+      // پنهان کردن وضعیت بارگذاری
       loadingEl.style.display = "none";
       
-      // Check for errors
+      // بررسی وجود خطا در پاسخ
       if (data.error) {
         showError(data.error);
         return;
       }
       
-      // Validate data structure
-      if (!data.name || data.signup_score === undefined || data.presence_score === undefined) {
+      // اعتبارسنجی ساختار داده
+      if (!data.name || data.registration_score === undefined || data.presence_score === undefined) {
         showError("داده‌های دریافتی ناقص هستند");
         return;
       }
       
-      // Calculate total score
-      const totalScore = parseInt(data.signup_score) + parseInt(data.presence_score);
+      // تبدیل مقادیر به عدد
+      const registrationScore = parseInt(data.registration_score) || 0;
+      const presenceScore = parseInt(data.presence_score) || 0;
+      const totalScore = registrationScore + presenceScore;
       
-      // Render results
+      // نمایش نتایج
       resultContent.innerHTML = `
         <div style="text-align: center; margin-bottom: 30px;">
           <div style="font-size: 1.3rem; font-weight: 700; color: #0c3483; margin-bottom: 10px;">
@@ -516,7 +560,7 @@
               <i class="fas fa-user-plus"></i>
               امتیاز ثبت‌نام
             </div>
-            <div class="score-value">${data.signup_score}</div>
+            <div class="score-value">${registrationScore}</div>
             <div class="score-unit">امتیاز</div>
           </div>
           
@@ -525,7 +569,7 @@
               <i class="fas fa-clock"></i>
               امتیاز حضور
             </div>
-            <div class="score-value">${data.presence_score}</div>
+            <div class="score-value">${presenceScore}</div>
             <div class="score-unit">امتیاز</div>
           </div>
           
@@ -577,7 +621,20 @@
       `;
     }
     
-    // Add input validation to allow only numbers
+    function toggleDebug() {
+      const debugInfo = document.getElementById("debugInfo");
+      const debugToggle = document.getElementById("debugToggle");
+      
+      if (debugInfo.style.display === "none" || !debugInfo.style.display) {
+        debugInfo.style.display = "block";
+        debugToggle.textContent = "پنهان کردن اطلاعات دیباگ";
+      } else {
+        debugInfo.style.display = "none";
+        debugToggle.textContent = "نمایش اطلاعات دیباگ";
+      }
+    }
+    
+    // اعتبارسنجی ورودی برای فقط عدد و حداکثر 5 رقم
     document.getElementById("codeInput").addEventListener("input", function() {
       this.value = this.value.replace(/\D/g, '');
       if (this.value.length > 5) {
@@ -585,7 +642,7 @@
       }
     });
     
-    // Add animation when page loads
+    // افزودن انیمیشن هنگام بارگذاری صفحه
     document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
         document.querySelector('.container').style.opacity = 1;
