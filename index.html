@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>چرخ شانس بازاریابان | استعلام امتیاز</title>
+  <title>چرخ شانس بازاریابان</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -14,410 +14,115 @@
     }
     
     body {
-      background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+      background-color: #f5f7fa;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      color: #333;
-      line-height: 1.6;
-    }
-    
-    .campaign-badge {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
-      color: white;
-      padding: 8px 20px;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 14px;
-      box-shadow: 0 4px 15px rgba(255, 138, 0, 0.5);
-      z-index: 10;
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
     }
     
     .container {
-      background: rgba(255, 255, 255, 0.97);
-      border-radius: 20px;
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       width: 100%;
-      max-width: 900px;
+      max-width: 800px;
       overflow: hidden;
-      position: relative;
-      transform: translateY(0);
-      transition: transform 0.4s ease;
-    }
-    
-    .container:hover {
-      transform: translateY(-10px);
-    }
-    
-    header {
-      background: linear-gradient(90deg, #0c3483 0%, #2a5298 100%);
-      color: white;
-      text-align: center;
-      padding: 30px 20px;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    header::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-      transform: rotate(30deg);
-    }
-    
-    .logo {
-      font-size: 3rem;
-      margin-bottom: 15px;
-      color: #FFD700;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    }
-    
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-    
-    .campaign-title {
-      font-size: 1.4rem;
-      color: #FFD700;
-      margin-bottom: 15px;
-      font-weight: 700;
-    }
-    
-    .subtitle {
-      font-size: 1rem;
-      opacity: 0.9;
-      max-width: 80%;
-      margin: 0 auto;
-      line-height: 1.8;
-    }
-    
-    .main-content {
-      padding: 30px;
       display: flex;
       flex-wrap: wrap;
-      gap: 30px;
     }
     
     .form-section {
       flex: 1;
       min-width: 300px;
+      padding: 30px;
+      background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+      color: white;
     }
     
     .wheel-section {
       flex: 1;
       min-width: 300px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .subtitle {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 30px;
+      text-align: center;
     }
     
     .input-group {
       margin-bottom: 20px;
-      position: relative;
     }
     
     label {
       display: block;
-      margin-bottom: 10px;
-      font-weight: 600;
-      color: #0c3483;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .input-field {
-      position: relative;
-      margin-bottom: 15px;
+      margin-bottom: 8px;
+      font-weight: 500;
     }
     
     input {
       width: 100%;
-      padding: 17px 20px 17px 60px;
-      border: 2px solid #d1e3ff;
-      border-radius: 15px;
-      font-size: 1.1rem;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
       transition: all 0.3s ease;
-      outline: none;
-      background: #f8fbff;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
     }
     
     input:focus {
-      border-color: #4b6cb7;
-      box-shadow: 0 0 0 4px rgba(12, 52, 131, 0.2);
-      background: white;
+      outline: none;
+      background: rgba(255, 255, 255, 0.3);
     }
     
-    .input-icon {
-      position: absolute;
-      left: 25px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #0c3483;
-      font-size: 1.3rem;
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
     }
     
     .btn {
-      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
-      color: white;
+      background: white;
+      color: #3a0ca3;
       border: none;
-      padding: 18px 30px;
-      border-radius: 15px;
-      font-size: 1.2rem;
-      font-weight: 700;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
       width: 100%;
       transition: all 0.3s ease;
-      box-shadow: 0 8px 20px rgba(255, 138, 0, 0.4);
-      letter-spacing: 0.5px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
+      margin-top: 10px;
     }
     
     .btn:hover {
-      background: linear-gradient(90deg, #ff2070 0%, #ff8a00 100%);
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(255, 138, 0, 0.6);
-    }
-    
-    .btn:active {
-      transform: translateY(2px);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     
     .btn:disabled {
-      background: linear-gradient(90deg, #cccccc 0%, #999999 100%);
+      opacity: 0.7;
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+      transform: none !important;
     }
     
-    .loading {
-      display: none;
-      text-align: center;
-      margin: 25px 0;
-    }
-    
-    .loading-spinner {
-      border: 5px solid rgba(12, 52, 131, 0.1);
-      border-top: 5px solid #ff8a00;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .loading-text {
-      margin-top: 15px;
-      font-weight: 600;
-      color: #0c3483;
-      font-size: 1.1rem;
-    }
-    
-    .result-container {
-      margin-top: 25px;
-      background: linear-gradient(135deg, #f8fbff 0%, #e6f0ff 100%);
-      border-radius: 15px;
-      padding: 25px;
-      border: 2px solid #d1e3ff;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    }
-    
-    .result-header {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-    
-    .result-title {
-      font-weight: 800;
-      color: #0c3483;
-      font-size: 1.4rem;
-      position: relative;
-      display: inline-block;
-      padding-bottom: 10px;
-    }
-    
-    .result-title::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
-      border-radius: 2px;
-    }
-    
-    .score-cards {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-    
-    .score-card {
-      flex: 1;
-      min-width: 130px;
-      background: white;
-      border-radius: 15px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      border: 1px solid #e6f0ff;
-      transition: all 0.3s ease;
-    }
-    
-    .score-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
-    
-    .score-card.total {
-      background: linear-gradient(135deg, #0c3483 0%, #2a5298 100%);
-      color: white;
-    }
-    
-    .score-card-title {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    
-    .score-card.score-card-title {
-      color: rgba(255, 255, 255, 0.9);
-    }
-    
-    .score-value {
-      font-size: 2.2rem;
-      font-weight: 800;
-      line-height: 1;
-    }
-    
-    .score-card.signup .score-value {
-      color: #0c3483;
-    }
-    
-    .score-card.presence .score-value {
-      color: #ff8a00;
-    }
-    
-    .score-card.score-value {
-      color: white;
-    }
-    
-    .score-unit {
-      font-size: 0.9rem;
-      font-weight: 600;
-      opacity: 0.8;
-      margin-top: 5px;
-    }
-    
-    .score-description {
-      background: #e6f0ff;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 10px;
-    }
-    
-    .description-title {
-      font-weight: 700;
-      color: #0c3483;
-      margin-bottom: 15px;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .description-list {
-      list-style: none;
-    }
-    
-    .description-list li {
-      padding: 8px 0;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 0.95rem;
-    }
-    
-    .description-list li i {
-      color: #ff8a00;
-      font-size: 1.1rem;
-      min-width: 20px;
-      margin-top: 3px;
-    }
-    
-    /* استایل‌های چرخ‌شانس */
     .wheel-container {
       text-align: center;
-      margin-top: 20px;
-      padding: 20px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-      border: 2px solid #e6f0ff;
-    }
-    
-    .wheel-header {
-      margin-bottom: 25px;
-    }
-    
-    .wheel-title {
-      font-weight: 800;
-      color: #0c3483;
-      font-size: 1.6rem;
-      position: relative;
-      display: inline-block;
-      padding-bottom: 10px;
-    }
-    
-    .wheel-title::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 5px;
-      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
-      border-radius: 3px;
-    }
-    
-    .wheel-subtitle {
-      color: #5a6a8c;
-      margin-top: 10px;
-      font-size: 1.1rem;
+      width: 100%;
     }
     
     .wheel-wrapper {
@@ -427,506 +132,132 @@
     }
     
     #wheelCanvas {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
+      width: 250px;
+      height: 250px;
       border-radius: 50%;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
-      border: 8px solid #0c3483;
+      border: 8px solid #4361ee;
+      box-shadow: 0 5px 20px rgba(67, 97, 238, 0.3);
     }
     
     .wheel-pointer {
       position: absolute;
-      top: -20px;
+      top: -15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 50px;
-      height: 50px;
+      color: #f72585;
+      font-size: 2.5rem;
       z-index: 10;
-      color: #ff2070;
-      font-size: 3rem;
-      text-shadow: 0 0 15px rgba(255, 32, 112, 0.6);
-      filter: drop-shadow(0 5px 3px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 3px 2px rgba(0,0,0,0.2));
     }
     
     .spin-btn {
-      max-width: 250px;
-      margin: 20px auto 0;
-      padding: 15px 25px;
-      font-size: 1.1rem;
+      background: linear-gradient(90deg, #f72585 0%, #b5179e 100%);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 10px 0;
+      transition: all 0.3s ease;
     }
     
-    .wheel-cost {
-      margin-top: 10px;
-      color: #ff2070;
-      font-weight: 700;
-      font-size: 1rem;
-      background: rgba(255, 32, 112, 0.1);
-      display: inline-block;
-      padding: 8px 20px;
-      border-radius: 30px;
+    .spin-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
     }
     
     .wheel-result {
-      margin-top: 20px;
-      padding: 15px 25px;
-      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
+      margin-top: 15px;
+      padding: 12px;
+      background: #4361ee;
       color: white;
-      border-radius: 30px;
-      font-weight: 700;
+      border-radius: 8px;
+      font-weight: 600;
       display: none;
-      font-size: 1.2rem;
-      box-shadow: 0 5px 15px rgba(255, 138, 0, 0.4);
     }
     
-    .form-submit-container {
-      margin-top: 20px;
+    .score-display {
+      background: #f8f9fa;
+      border-radius: 8px;
       padding: 15px;
-      background: #f0f8ff;
-      border-radius: 15px;
-      border: 2px dashed #4b6cb7;
+      margin-top: 20px;
+      text-align: center;
       display: none;
     }
     
-    .form-submit-title {
-      text-align: center;
+    .score-value {
+      font-size: 1.8rem;
       font-weight: 700;
-      color: #0c3483;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      color: #3a0ca3;
+      margin: 5px 0;
     }
     
-    .submit-btn {
-      background: linear-gradient(90deg, #0c3483 0%, #2a5298 100%);
-      color: white;
-      border: none;
-      padding: 15px 25px;
-      border-radius: 15px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      cursor: pointer;
-      width: 100%;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(12, 52, 131, 0.3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .submit-btn:hover {
-      background: linear-gradient(90deg, #2a5298 0%, #0c3483 100%);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(12, 52, 131, 0.4);
-    }
-    
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #f8fbff;
-      color: #5a6a8c;
-      font-size: 0.9rem;
-      border-top: 1px solid #d1e3ff;
-      font-weight: 500;
-    }
-    
-    /* انیمیشن‌ها */
-    @keyframes winPulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    
-    .win-animation {
-      animation: winPulse 0.5s ease-in-out 3;
-    }
-    
-    .section-title {
-      font-weight: 700;
-      color: #0c3483;
-      margin-bottom: 20px;
-      font-size: 1.4rem;
-      position: relative;
-      padding-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .section-title::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 60px;
-      height: 4px;
-      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
-      border-radius: 2px;
-    }
-    
-    @media (max-width: 900px) {
-      .main-content {
+    @media (max-width: 768px) {
+      .container {
         flex-direction: column;
+      }
+      
+      .form-section {
+        order: 2;
       }
       
       .wheel-section {
-        order: -1;
-      }
-    }
-    
-    @media (max-width: 600px) {
-      .container {
-        margin: 10px;
-      }
-      
-      header {
-        padding: 25px 15px;
-      }
-      
-      h1 {
-        font-size: 1.5rem;
-      }
-      
-      .campaign-title {
-        font-size: 1.2rem;
-      }
-      
-      .main-content {
-        padding: 20px 15px;
-      }
-      
-      .score-cards {
-        flex-direction: column;
-      }
-      
-      input {
-        padding: 15px 15px 15px 50px;
-        font-size: 1rem;
-      }
-      
-      .input-icon {
-        left: 18px;
-      }
-      
-      .wheel-container {
-        margin: 20px 0;
-        padding: 15px;
-      }
-      
-      .wheel-title {
-        font-size: 1.4rem;
-      }
-      
-      #wheelCanvas {
-        width: 280px;
-        height: 280px;
+        order: 1;
+        padding-bottom: 10px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="campaign-badge">کمپین ویژه</div>
-  
   <div class="container">
-    <header>
-      <div class="logo">
-        <i class="fas fa-trophy"></i>
-      </div>
-      <h1>سیستم امتیازدهی بازاریابان</h1>
-      <div class="campaign-title">کمپین تابستانه ۱۴۰۳</div>
-      <p class="subtitle">با ثبت هر سفر و حضور فعالانه، امتیاز کسب کنید و از جوایز ویژه برخوردار شوید</p>
-    </header>
-    
-    <div class="main-content">
-      <!-- بخش فرم ورود اطلاعات -->
-      <div class="form-section">
-        <div class="section-title">
-          <i class="fas fa-id-card"></i> ورود اطلاعات
-        </div>
-        
-        <div class="input-group">
-          <label for="nationalCodeInput">
-            <i class="fas fa-id-card"></i> کد ملی خود را وارد نمایید
-          </label>
-          <div class="input-field">
-            <i class="fas fa-user input-icon"></i>
-            <input type="text" id="nationalCodeInput" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
-          </div>
-          
-          <label for="codeInput">
-            <i class="fas fa-fingerprint"></i> کد بازاریابی خود را وارد نمایید
-          </label>
-          <div class="input-field">
-            <i class="fas fa-key input-icon"></i>
-            <input type="text" id="codeInput" placeholder="کد ۵ رقمی (مثال: 14030)" maxlength="5">
-          </div>
-        </div>
-        
-        <button class="btn" onclick="checkScore()">
-          <i class="fas fa-chart-bar"></i> مشاهده امتیازات
-        </button>
-        
-        <div class="loading" id="loading">
-          <div class="loading-spinner"></div>
-          <div class="loading-text">در حال دریافت اطلاعات از سرور...</div>
-        </div>
-        
-        <div class="result-container" id="resultContainer">
-          <div class="result-header">
-            <div class="result-title">نتیجه استعلام امتیاز</div>
-          </div>
-          
-          <div id="resultContent">
-            <div style="text-align: center; padding: 30px 0; color: #5a6a8c;">
-              <i class="fas fa-chart-pie" style="font-size: 3rem; color: #d1e3ff; margin-bottom: 20px;"></i>
-              <p>لطفاً کد بازاریابی خود را وارد کرده و روی دکمه "مشاهده امتیازات" کلیک کنید</p>
-            </div>
-          </div>
-        </div>
+    <!-- بخش فرم ورود اطلاعات -->
+    <div class="form-section">
+      <div class="title">سیستم امتیازدهی</div>
+      <div class="subtitle">کد ملی و کد بازاریابی خود را وارد کنید</div>
+      
+      <div class="input-group">
+        <label for="nationalCodeInput">کد ملی</label>
+        <input type="text" id="nationalCodeInput" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
       </div>
       
-      <!-- بخش چرخ شانس -->
-      <div class="wheel-section">
-        <div class="section-title">
-          <i class="fas fa-gift"></i> چرخ شانس جایزه
-        </div>
-        
-        <div class="wheel-container">
-          <div class="wheel-header">
-            <div class="wheel-title">چرخ شانس</div>
-            <div class="wheel-subtitle">با هر چرخش شانس خود را برای برنده شدن امتحان کنید</div>
-          </div>
-          <div class="wheel-wrapper">
-            <div class="wheel-pointer">
-              <i class="fas fa-caret-down"></i>
-            </div>
-            <canvas id="wheelCanvas" width="300" height="300"></canvas>
-          </div>
-          <button class="btn spin-btn" id="spinButton" onclick="spinWheel()" disabled>
-            <i class="fas fa-redo"></i> چرخش چرخ شانس
-          </button>
-          <div class="wheel-cost">هر چرخش 5 امتیاز کسر می‌شود</div>
-          <div class="wheel-result" id="wheelResult">لطفاً ابتدا اطلاعات خود را وارد کنید</div>
-          
-          <div class="form-submit-container" id="formSubmitContainer">
-            <div class="form-submit-title">
-              <i class="fas fa-file-alt"></i>
-              ثبت اطلاعات جایزه در سیستم
-            </div>
-            <p style="text-align: center; margin-bottom: 15px; color: #5a6a8c;">
-              لطفاً برای ثبت جایزه خود روی دکمه زیر کلیک کنید
-            </p>
-            <button class="submit-btn" onclick="submitPrizeToForm()">
-              <i class="fas fa-paper-plane"></i>
-              ارسال اطلاعات جایزه
-            </button>
-          </div>
-        </div>
-        
-        <div class="score-description">
-          <div class="description-title">
-            <i class="fas fa-info-circle"></i>
-            نحوه محاسبه امتیازات
-          </div>
-          <ul class="description-list">
-            <li>
-              <i class="fas fa-check-circle"></i>
-              <span>هر ثبت‌نام سفر (سواری، موتور، وانت): <strong>1 امتیاز</strong></span>
-            </li>
-            <li>
-              <i class="fas fa-check-circle"></i>
-              <span>هر 8 ساعت حضور فعال: <strong>5 امتیاز</strong></span>
-            </li>
-            <li>
-              <i class="fas fa-check-circle"></i>
-              <span>امتیاز کل = مجموع امتیاز ثبت‌نام و امتیاز حضور</span>
-            </li>
-          </ul>
-        </div>
+      <div class="input-group">
+        <label for="codeInput">کد بازاریابی</label>
+        <input type="text" id="codeInput" placeholder="کد ۵ رقمی" maxlength="5">
+      </div>
+      
+      <button class="btn" onclick="checkScore()">مشاهده امتیازات</button>
+      
+      <div class="score-display" id="scoreDisplay">
+        <div>امتیاز کل شما:</div>
+        <div class="score-value" id="totalScore">0</div>
+        <div>امتیاز باقیمانده برای چرخش</div>
       </div>
     </div>
     
-    <footer>
-      <p>هر ثبت‌نام سفر (سواری، موتور، وانت): 1 امتیاز | هر 8 ساعت حضور: 5 امتیاز</p>
-    </footer>
+    <!-- بخش چرخ شانس -->
+    <div class="wheel-section">
+      <div class="wheel-container">
+        <div class="wheel-wrapper">
+          <div class="wheel-pointer">
+            <i class="fas fa-caret-down"></i>
+          </div>
+          <canvas id="wheelCanvas" width="300" height="300"></canvas>
+        </div>
+        <button class="spin-btn" id="spinButton" onclick="spinWheel()" disabled>
+          <i class="fas fa-redo"></i> چرخش چرخ شانس
+        </button>
+        <div class="wheel-result" id="wheelResult"></div>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Google Apps Script endpoint
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZzmxCbcROVU3P8QqEfo0lQL98jPSfKy8mGSZjdymlqC90dSc_3TPcJL0FbfF37dg9/exec";
-    
     // اطلاعات کاربر
     let userData = null;
     let currentPrize = "";
-    let canSpinAgain = false;
-    
-    function checkScore() {
-      const nationalCode = document.getElementById("nationalCodeInput").value.trim();
-      const code = document.getElementById("codeInput").value.trim();
-      const resultContent = document.getElementById("resultContent");
-      const loadingEl = document.getElementById("loading");
-      
-      // اعتبارسنجی ورودی‌ها
-      if (!/^\d{10}$/.test(nationalCode)) {
-        showError("کد ملی باید ۱۰ رقم باشد");
-        return;
-      }
-      
-      if (!/^\d{5}$/.test(code)) {
-        showError("کد بازاریابی باید ۵ رقم باشد");
-        return;
-      }
-      
-      // نمایش وضعیت بارگذاری
-      loadingEl.style.display = "block";
-      resultContent.innerHTML = "";
-      
-      // ایجاد درخواست JSONP
-      const script = document.createElement('script');
-      script.src = `${SCRIPT_URL}?code=${code}&callback=handleResponse`;
-      script.onerror = function() {
-        showError("خطا در اتصال به سرور. لطفاً دوباره تلاش کنید.");
-        loadingEl.style.display = "none";
-      };
-      document.body.appendChild(script);
-    }
-    
-    function handleResponse(data) {
-      const resultContent = document.getElementById("resultContent");
-      const loadingEl = document.getElementById("loading");
-      
-      // پنهان کردن وضعیت بارگذاری
-      loadingEl.style.display = "none";
-      
-      // اعتبارسنجی پیشرفته با فیلدهای واقعی
-      const requiredFields = ['name', 'score', 'signup_score', 'presence_score'];
-      const missingFields = requiredFields.filter(field => {
-        return data[field] === undefined || data[field] === null;
-      });
-      
-      if (missingFields.length > 0) {
-        console.error("فیلدهای ضروری وجود ندارند:", missingFields);
-        showError(`خطا در دریافت داده‌ها. فیلدهای ضروری وجود ندارند: ${missingFields.join(', ')}`);
-        return;
-      }
-      
-      // تبدیل مقادیر به عدد با مقدار پیش‌فرض 0
-      const signupScore = parseInt(data.signup_score) || 0;
-      const presenceScore = parseInt(data.presence_score) || 0;
-      const totalScore = parseInt(data.score) || 0;
-      
-      // ذخیره اطلاعات کاربر
-      userData = {
-        name: data.name,
-        nationalCode: document.getElementById("nationalCodeInput").value,
-        code: data.code || document.getElementById("codeInput").value,
-        signupScore: signupScore,
-        presenceScore: presenceScore,
-        totalScore: totalScore
-      };
-      
-      // نمایش نتایج
-      resultContent.innerHTML = `
-        <div style="text-align: center; margin-bottom: 30px;">
-          <div style="font-size: 1.3rem; font-weight: 700; color: #0c3483; margin-bottom: 10px;">
-            <i class="fas fa-user" style="margin-left: 10px;"></i>
-            ${data.name}
-          </div>
-          <div style="font-size: 1rem; color: #5a6a8c; background: #edf4ff; display: inline-block; padding: 5px 20px; border-radius: 30px;">
-            کد بازاریاب: ${data.code || document.getElementById("codeInput").value}
-          </div>
-        </div>
-        
-        <div class="score-cards">
-          <div class="score-card registration">
-            <div class="score-card-title">
-              <i class="fas fa-user-plus"></i>
-              امتیاز ثبت‌نام
-            </div>
-            <div class="score-value">${signupScore}</div>
-            <div class="score-unit">امتیاز</div>
-          </div>
-          
-          <div class="score-card presence">
-            <div class="score-card-title">
-              <i class="fas fa-clock"></i>
-              امتیاز حضور
-            </div>
-            <div class="score-value">${presenceScore}</div>
-            <div class="score-unit">امتیاز</div>
-          </div>
-          
-          <div class="score-card total">
-            <div class="score-card-title">
-              <i class="fas fa-star"></i>
-              امتیاز کل
-            </div>
-            <div class="score-value">${totalScore}</div>
-            <div class="score-unit">امتیاز</div>
-          </div>
-        </div>
-      `;
-      
-      // فعال کردن دکمه چرخش
-      canSpinAgain = true;
-      updateSpinButtonState();
-      
-      // نمایش نتیجه چرخ شانس
-      document.getElementById("wheelResult").innerHTML = "برای چرخش چرخ شانس آماده هستید!";
-      document.getElementById("wheelResult").style.display = "block";
-      document.getElementById("wheelResult").style.background = "linear-gradient(90deg, #0c3483 0%, #2a5298 100%)";
-    }
-    
-    function updateSpinButtonState() {
-      const spinButton = document.getElementById("spinButton");
-      if (spinButton) {
-        spinButton.disabled = !userData || userData.totalScore < 5 || !canSpinAgain;
-      }
-    }
-    
-    function showError(message) {
-      const resultContent = document.getElementById("resultContent");
-      const loadingEl = document.getElementById("loading");
-      
-      loadingEl.style.display = "none";
-      
-      resultContent.innerHTML = `
-        <div style="text-align: center; padding: 30px 0; color: #ff2070;">
-          <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px;"></i>
-          <p style="font-weight: 700; font-size: 1.2rem;">${message}</p>
-          <p style="margin-top: 10px;">لطفاً کدهای خود را صحیح وارد نمایید</p>
-        </div>
-      `;
-    }
-    
-    // اعتبارسنجی ورودی‌ها
-    document.getElementById("nationalCodeInput").addEventListener("input", function() {
-      this.value = this.value.replace(/\D/g, '');
-      if (this.value.length > 10) {
-        this.value = this.value.slice(0, 10);
-      }
-    });
-    
-    document.getElementById("codeInput").addEventListener("input", function() {
-      this.value = this.value.replace(/\D/g, '');
-      if (this.value.length > 5) {
-        this.value = this.value.slice(0, 5);
-      }
-    });
-    
-    // افزودن انیمیشن هنگام بارگذاری صفحه
-    document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(() => {
-        document.querySelector('.container').style.opacity = 1;
-      }, 100);
-      
-      // مقداردهی اولیه چرخ‌شانس
-      initWheel();
-    });
+    let canSpin = false;
     
     // چرخ‌شانس با 8 بخش
     const wheel = {
@@ -946,12 +277,14 @@
       spinning: false
     };
 
+    // مقداردهی اولیه چرخ‌شانس
     function initWheel() {
       wheel.canvas = document.getElementById('wheelCanvas');
       wheel.ctx = wheel.canvas.getContext('2d');
       drawWheel();
     }
 
+    // رسم چرخ‌شانس
     function drawWheel() {
       const ctx = wheel.ctx;
       const centerX = wheel.canvas.width / 2;
@@ -959,12 +292,11 @@
       const radius = Math.min(centerX, centerY) - 10;
       ctx.clearRect(0, 0, wheel.canvas.width, wheel.canvas.height);
 
-      // Draw wheel segments
+      // رسم بخش‌های چرخ
       for (let i = 0; i < wheel.segments; i++) {
         const startAngle = i * 2 * Math.PI / wheel.segments + wheel.angle;
         const endAngle = (i + 1) * 2 * Math.PI / wheel.segments + wheel.angle;
 
-        // رسم بخش‌های چرخ
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
         ctx.arc(centerX, centerY, radius, startAngle, endAngle);
@@ -981,65 +313,37 @@
         ctx.rotate(startAngle + (Math.PI / wheel.segments));
         ctx.textAlign = 'right';
         ctx.fillStyle = 'white';
-        ctx.font = 'bold 14px Arial';
+        ctx.font = 'bold 12px Arial';
         ctx.fillText(wheel.prizes[i], radius - 15, 5);
         ctx.restore();
       }
 
       // دکمه مرکزی
       ctx.beginPath();
-      ctx.arc(centerX, centerY, 20, 0, 2 * Math.PI);
-      ctx.fillStyle = '#0c3483';
-      ctx.fill();
-      ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 3;
-      ctx.stroke();
-      
-      // Decorative circle in center
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
-      ctx.fillStyle = '#FFD700';
+      ctx.arc(centerX, centerY, 15, 0, 2 * Math.PI);
+      ctx.fillStyle = '#3a0ca3';
       ctx.fill();
     }
 
+    // چرخاندن چرخ
     function spinWheel() {
       const wheelResult = document.getElementById("wheelResult");
-      wheelResult.style.display = "none";
+      
+      if (!userData || userData.totalScore < 5 || wheel.spinning) return;
 
-      // پنهان کردن فرم ارسال اطلاعات
-      document.getElementById("formSubmitContainer").style.display = "none";
-      
-      // بررسی اطلاعات کاربر و امتیاز کافی
-      if (!userData) {
-        wheelResult.innerHTML = "خطا در اطلاعات کاربر";
-        wheelResult.style.display = "block";
-        return;
-      }
-      
-      if (userData.totalScore < 5) {
-        wheelResult.innerHTML = "امتیاز شما برای چرخش کافی نیست!";
-        wheelResult.style.display = "block";
-        return;
-      }
-      
-      if (wheel.spinning) return;
-
-      // کسر 5 امتیاز از کاربر
+      // کسر امتیاز
       userData.totalScore -= 5;
-      document.querySelector('.score-card.total .score-value').textContent = userData.totalScore;
-      
-      // غیرفعال کردن چرخش تا قبل از ثبت فرم
-      canSpinAgain = false;
-      
-      // به‌روزرسانی وضعیت دکمه چرخش
+      document.getElementById("totalScore").textContent = userData.totalScore;
       updateSpinButtonState();
       
       // شروع چرخش
       wheel.spinning = true;
-      const spinDuration = 4000; // 4 ثانیه
+      wheelResult.style.display = "none";
+      
+      const spinDuration = 3000;
       const startTime = Date.now();
       const startAngle = wheel.angle;
-      const spins = 8; // تعداد چرخش‌ها
+      const spins = 5;
       const segmentAngle = 2 * Math.PI / wheel.segments;
       const winningSegment = Math.floor(Math.random() * wheel.segments);
       const targetAngle = startAngle + spins * 2 * Math.PI + (wheel.segments - winningSegment) * segmentAngle;
@@ -1047,9 +351,10 @@
       function animate() {
         const currentTime = Date.now();
         const elapsed = currentTime - startTime;
+        
         if (elapsed < spinDuration) {
           const progress = elapsed / spinDuration;
-          const easeProgress = 1 - Math.pow(1 - progress, 4); // انیمیشن نرم
+          const easeProgress = 1 - Math.pow(1 - progress, 3);
           wheel.angle = startAngle + easeProgress * (targetAngle - startAngle);
           drawWheel();
           requestAnimationFrame(animate);
@@ -1061,16 +366,12 @@
           // نمایش نتیجه
           setTimeout(() => {
             currentPrize = wheel.prizes[winningSegment];
-            wheelResult.innerHTML = `تبریک! شما <strong>${currentPrize}</strong> برنده شدید!`;
+            wheelResult.textContent = `تبریک! شما ${currentPrize} برنده شدید!`;
             wheelResult.style.display = "block";
-            wheelResult.classList.add("win-animation");
+            wheelResult.style.background = "#f72585";
             
-            // نمایش فرم ارسال اطلاعات جایزه
-            document.getElementById("formSubmitContainer").style.display = "block";
-            
-            setTimeout(() => {
-              wheelResult.classList.remove("win-animation");
-            }, 1500);
+            // ثبت جایزه در فرم گوگل
+            submitPrizeToForm();
           }, 500);
         }
       }
@@ -1078,53 +379,93 @@
       animate();
     }
     
+    // ثبت جایزه در فرم گوگل
     function submitPrizeToForm() {
       if (!userData || !currentPrize) return;
       
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeVM6KF12vzBeIDYLecG4dB7sls026fzAvE0zllAmy9g-9gig/formResponse";
       
-      // دکمه را غیرفعال کن تا از ارسال مکرر جلوگیری شود
-      const submitBtn = document.querySelector('.submit-btn');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...';
-      
-      // ایجاد داده‌های فرم
       const formData = new FormData();
-      formData.append('entry.1502896266', userData.code);       // کد بازاریابی
-      formData.append('entry.1418541256', userData.nationalCode); // کد ملی
-      formData.append('entry.136841146', currentPrize);        // جایزه برنده شده
+      formData.append('entry.1502896266', userData.code);
+      formData.append('entry.1418541256', userData.nationalCode);
+      formData.append('entry.136841146', currentPrize);
       
-      // ارسال درخواست
       fetch(formUrl, {
         method: 'POST',
         body: formData,
         mode: 'no-cors'
-      })
-      .then(() => {
-        // نمایش پیام موفقیت
-        const wheelResult = document.getElementById("wheelResult");
-        wheelResult.innerHTML = `اطلاعات جایزه با موفقیت ثبت شد!`;
-        wheelResult.style.display = "block";
-        wheelResult.style.background = "linear-gradient(90deg, #0c3483 0%, #2a5298 100%)";
-        
-        // فعال کردن امکان چرخش مجدد
-        canSpinAgain = true;
-        updateSpinButtonState();
-        
-        // مخفی کردن فرم ارسال
-        document.getElementById("formSubmitContainer").style.display = "none";
-      })
-      .catch(error => {
-        console.error('Error submitting form:', error);
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ارسال اطلاعات جایزه';
-        
-        const wheelResult = document.getElementById("wheelResult");
-        wheelResult.innerHTML = `خطا در ارسال اطلاعات. لطفاً دوباره تلاش کنید.`;
-        wheelResult.style.display = "block";
-        wheelResult.style.background = "linear-gradient(90deg, #ff0000 0%, #ff5252 100%)";
       });
     }
+    
+    // بررسی امتیاز کاربر
+    function checkScore() {
+      const nationalCode = document.getElementById("nationalCodeInput").value.trim();
+      const code = document.getElementById("codeInput").value.trim();
+      
+      // اعتبارسنجی ساده
+      if (!/^\d{10}$/.test(nationalCode) {
+        alert("لطفاً کد ملی را صحیح وارد کنید (۱۰ رقم)");
+        return;
+      }
+      
+      if (!/^\d{5}$/.test(code)) {
+        alert("لطفاً کد بازاریابی را صحیح وارد کنید (۵ رقم)");
+        return;
+      }
+      
+      // شبیه‌سازی دریافت اطلاعات از سرور
+      simulateServerRequest(code, nationalCode);
+    }
+    
+    // شبیه‌سازی درخواست سرور
+    function simulateServerRequest(code, nationalCode) {
+      // در حالت واقعی اینجا باید به سرور درخواست بزنید
+      setTimeout(() => {
+        // داده‌های نمونه
+        userData = {
+          name: "کاربر نمونه",
+          nationalCode: nationalCode,
+          code: code,
+          totalScore: Math.floor(Math.random() * 100) + 50 // امتیاز تصادفی بین 50-150
+        };
+        
+        // نمایش امتیاز
+        document.getElementById("totalScore").textContent = userData.totalScore;
+        document.getElementById("scoreDisplay").style.display = "block";
+        
+        // فعال کردن دکمه چرخش اگر امتیاز کافی باشد
+        canSpin = userData.totalScore >= 5;
+        updateSpinButtonState();
+        
+        // نمایش پیام راهنما
+        const wheelResult = document.getElementById("wheelResult");
+        wheelResult.textContent = canSpin ? "آماده برای چرخش!" : "امتیاز شما کافی نیست!";
+        wheelResult.style.display = "block";
+        wheelResult.style.background = canSpin ? "#4361ee" : "#f72585";
+      }, 800);
+    }
+    
+    // به‌روزرسانی وضعیت دکمه چرخش
+    function updateSpinButtonState() {
+      const spinButton = document.getElementById("spinButton");
+      spinButton.disabled = !canSpin || !userData || userData.totalScore < 5 || wheel.spinning;
+    }
+    
+    // اعتبارسنجی ورودی‌ها
+    document.getElementById("nationalCodeInput").addEventListener("input", function() {
+      this.value = this.value.replace(/\D/g, '');
+      if (this.value.length > 10) this.value = this.value.slice(0, 10);
+    });
+    
+    document.getElementById("codeInput").addEventListener("input", function() {
+      this.value = this.value.replace(/\D/g, '');
+      if (this.value.length > 5) this.value = this.value.slice(0, 5);
+    });
+    
+    // مقداردهی اولیه هنگام بارگذاری صفحه
+    window.onload = function() {
+      initWheel();
+    };
   </script>
 </body>
 </html>
