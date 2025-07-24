@@ -295,7 +295,7 @@
       line-height: 1;
     }
     
-    .score-card.registration .score-value {
+    .score-card.signup .score-value {
       color: #0c3483;
     }
     
@@ -532,15 +532,15 @@
       }
       
       // اعتبارسنجی ساختار داده
-      if (!data.name || data.registration_score === undefined || data.presence_score === undefined) {
+      if (!data.name || data.signup_score === undefined || data.presence_score === undefined) {
         showError("داده‌های دریافتی ناقص هستند");
         return;
       }
       
       // تبدیل مقادیر به عدد
-      const registrationScore = parseInt(data.registration_score) || 0;
+      const registrationScore = parseInt(data.signup_score) || 0;
       const presenceScore = parseInt(data.presence_score) || 0;
-      const totalScore = registrationScore + presenceScore;
+      const totalScore = signupScore + presenceScore;
       
       // نمایش نتایج
       resultContent.innerHTML = `
@@ -560,7 +560,7 @@
               <i class="fas fa-user-plus"></i>
               امتیاز ثبت‌نام
             </div>
-            <div class="score-value">${registrationScore}</div>
+            <div class="score-value">${signupScore}</div>
             <div class="score-unit">امتیاز</div>
           </div>
           
