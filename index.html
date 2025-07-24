@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>کمپین ویژه بازاریابان | استعلام امتیاز</title>
+  <title>چرخ شانس بازاریابان | استعلام امتیاز</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -180,6 +180,13 @@
     
     .btn:active {
       transform: translateY(2px);
+    }
+    
+    .btn:disabled {
+      background: linear-gradient(90deg, #cccccc 0%, #999999 100%);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
     
     .loading {
@@ -401,6 +408,13 @@
       display: none;
     }
     
+    .wheel-cost {
+      margin-top: 10px;
+      color: #ff2070;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
     footer {
       text-align: center;
       padding: 20px;
@@ -505,6 +519,9 @@
     // Google Apps Script endpoint
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZzmxCbcROVU3P8QqEfo0lQL98jPSfKy8mGSZjdymlqC90dSc_3TPcJL0FbfF37dg9/exec";
     
+    // اطلاعات کاربر
+    let userData = null;
+    
     function checkScore() {
       const code = document.getElementById("codeInput").value.trim();
       const resultContent = document.getElementById("resultContent");
@@ -554,6 +571,15 @@
       const presenceScore = parseInt(data.presence_score) || 0;
       const totalScore = parseInt(data.score) || 0;
       
+      // ذخیره اطلاعات کاربر
+      userData = {
+        name: data.name,
+        code: data.code || document.getElementById("codeInput").value,
+        signupScore: signupScore,
+        presenceScore: presenceScore,
+        totalScore: totalScore
+      };
+      
       // نمایش نتایج
       resultContent.innerHTML = `
         <div style="text-align: center; margin-bottom: 30px;">
@@ -602,9 +628,10 @@
             </div>
             <canvas id="wheelCanvas" width="300" height="300"></canvas>
           </div>
-          <button class="btn spin-btn" onclick="spinWheel()">
+          <button class="btn spin-btn" id="spinButton" onclick="spinWheel()">
             <i class="fas fa-redo"></i> چرخش چرخ شانس
           </button>
+          <div class="wheel-cost">هر چرخش 5 امتیاز کسر می‌شود</div>
           <div class="wheel-result" id="wheelResult"></div>
         </div>
         
@@ -632,6 +659,16 @@
       
       // مقداردهی اولیه چرخ‌شانس
       initWheel();
+      
+      // فعال/غیرفعال کردن دکمه چرخش بر اساس امتیاز کاربر
+      updateSpinButtonState();
+    }
+    
+    function updateSpinButtonState() {
+      const spinButton = document.getElementById("spinButton");
+      if (spinButton) {
+        spinButton.disabled = !userData || userData.totalScore < 5;
+      }
     }
     
     function showError(message) {
@@ -729,8 +766,32 @@
     }
 
     function spinWheel() {
+      const wheelResult = document.getElementById("wheelResult");
+      wheelResult.style.display = "none";
+
+      // بررسی اطلاعات کاربر و امتیاز کافی
+      if (!userData) {
+        wheelResult.innerHTML = "خطا در اطلاعات کاربر";
+        wheelResult.style.display = "block";
+        return;
+      }
+      
+      if (userData.totalScore < 5) {
+        wheelResult.innerHTML = "امتیاز شما برای چرخش کافی نیست!";
+        wheelResult.style.display = "block";
+        return;
+      }
+      
       if (wheel.spinning) return;
 
+      // کسر 5 امتیاز از کاربر
+      userData.totalScore -= 5;
+      document.querySelector('.score-card.total .score-value').textContent = userData.totalScore;
+      
+      // به‌روزرسانی وضعیت دکمه چرخش
+      updateSpinButtonState();
+      
+      // شروع چرخش
       wheel.spinning = true;
       const spinDuration = 5000; // 5 ثانیه
       const startTime = Date.now();
@@ -756,7 +817,6 @@
           
           // نمایش نتیجه
           setTimeout(() => {
-            const wheelResult = document.getElementById("wheelResult");
             wheelResult.innerHTML = `تبریک! شما ${wheel.prizes[winningSegment]} برنده شدید!`;
             wheelResult.style.display = "block";
           }, 500);
