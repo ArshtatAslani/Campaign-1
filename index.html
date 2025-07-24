@@ -187,11 +187,42 @@
       display: none;
     }
     
+    .score-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .score-label {
+      color: #6c757d;
+    }
+    
     .score-value {
-      font-size: 1.8rem;
       font-weight: 700;
       color: #3a0ca3;
-      margin: 5px 0;
+    }
+    
+    .total-score {
+      font-size: 1.5rem;
+      margin-top: 15px;
+      color: #3a0ca3;
+      font-weight: 800;
+    }
+    
+    .submit-prize-btn {
+      background: linear-gradient(90deg, #4cc9f0 0%, #4895ef 100%);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+      display: none;
     }
     
     @media (max-width: 768px) {
@@ -230,9 +261,20 @@
       <button class="btn" id="checkScoreBtn">مشاهده امتیازات</button>
       
       <div class="score-display" id="scoreDisplay">
-        <div>امتیاز کل شما:</div>
-        <div class="score-value" id="totalScore">0</div>
-        <div>امتیاز باقیمانده برای چرخش</div>
+        <div class="score-row">
+          <span class="score-label">امتیاز ثبت‌نام:</span>
+          <span class="score-value" id="signupScore">0</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">امتیاز حضور:</span>
+          <span class="score-value" id="presenceScore">0</span>
+        </div>
+        <div class="total-score">
+          امتیاز کل: <span id="totalScore">0</span>
+        </div>
+        <button class="submit-prize-btn" id="submitPrizeBtn">
+          <i class="fas fa-trophy"></i> ثبت جایزه
+        </button>
       </div>
     </div>
     
@@ -246,7 +288,7 @@
           <canvas id="wheelCanvas" width="300" height="300"></canvas>
         </div>
         <button class="spin-btn" id="spinButton" disabled>
-          <i class="fas fa-redo"></i> چرخش چرخ شانس
+          <i class="fas fa-redo"></i> چرخش چرخ شانس (5 امتیاز)
         </button>
         <div class="wheel-result" id="wheelResult"></div>
       </div>
@@ -344,12 +386,13 @@
 
       // کسر امتیاز
       userData.totalScore -= 5;
-      document.getElementById("totalScore").textContent = userData.totalScore;
+      updateScoreDisplay();
       updateSpinButtonState();
       
       // شروع چرخش
       wheel.spinning = true;
       wheelResult.style.display = "none";
+      document.getElementById("submitPrizeBtn").style.display = "none";
       
       const spinDuration = 3000;
       const startTime = Date.now();
@@ -381,8 +424,8 @@
             wheelResult.style.display = "block";
             wheelResult.style.background = "#f72585";
             
-            // ثبت جایزه در فرم گوگل
-            submitPrizeToForm();
+            // نمایش دکمه ثبت جایزه
+            document.getElementById("submitPrizeBtn").style.display = "block";
           }, 500);
         }
       }
@@ -397,19 +440,66 @@
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeVM6KF12vzBeIDYLecG4dB7sls026fzAvE0zllAmy9g-9gig/formResponse";
       
       const formData = new FormData();
-      formData.append('entry.1502896266', userData.code);
-      formData.append('entry.1418541256', userData.nationalCode);
-      formData.append('entry.136841146', currentPrize);
+      formData.append('entry.1502896266', userData.code); // کد بازاریابی
+      formData.append('entry.1418541256', userData.nationalCode); // کد ملی
+      formData.append('entry.136841146', currentPrize); // جایزه برنده شده
+      
+      const btn = document.getElementById("submitPrizeBtn");
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ثبت...';
       
       fetch(formUrl, {
         method: 'POST',
         body: formData,
         mode: 'no-cors'
+      })
+      .then(() => {
+        btn.innerHTML = '<i class="fas fa-check"></i> جایزه ثبت شد!';
+        btn.style.background = "linear-gradient(90deg, #4bb543 0%, #2e8b57 100%)";
+        setTimeout(() => {
+          btn.style.display = "none";
+        }, 2000);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        btn.innerHTML = '<i class="fas fa-times"></i> خطا در ثبت!';
+        btn.style.background = "linear-gradient(90deg, #ff0000 0%, #ff5252 100%)";
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-trophy"></i> ثبت جایزه';
+          btn.style.background = "linear-gradient(90deg, #4cc9f0 0%, #4895ef 100%)";
+        }, 2000);
       });
     }
     
+    // دریافت اطلاعات از گوگل شیت
+    async function fetchUserData(code) {
+      try {
+        // آدرس اسکریپت گوگل برای دریافت داده‌ها
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbwZzmxCbcROVU3P8QqEfo0lQL98jPSfKy8mGSZjdymlqC90dSc_3TPcJL0FbfF37dg9/exec";
+        
+        const response = await fetch(`${scriptUrl}?code=${code}`);
+        const data = await response.json();
+        
+        if (data && data.code) {
+          return {
+            name: data.name || "کاربر",
+            code: data.code,
+            nationalCode: document.getElementById("nationalCodeInput").value,
+            signupScore: parseInt(data.signup_score) || 0,
+            presenceScore: parseInt(data.presence_score) || 0,
+            totalScore: parseInt(data.score) || 0
+          };
+        }
+        throw new Error("داده‌ای یافت نشد");
+      } catch (error) {
+        console.error("خطا در دریافت داده:", error);
+        throw error;
+      }
+    }
+    
     // بررسی امتیاز کاربر
-    function checkScore() {
+    async function checkScore() {
       const nationalCode = document.getElementById("nationalCodeInput").value.trim();
       const code = document.getElementById("codeInput").value.trim();
       
@@ -427,23 +517,14 @@
       // نمایش لودینگ
       const btn = document.getElementById("checkScoreBtn");
       btn.disabled = true;
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال بررسی...';
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال دریافت...';
       
-      // شبیه‌سازی دریافت اطلاعات از سرور
-      setTimeout(() => {
-        // داده‌های نمونه
-        userData = {
-          name: "کاربر نمونه",
-          nationalCode: nationalCode,
-          code: code,
-          totalScore: Math.floor(Math.random() * 100) + 50 // امتیاز تصادفی بین 50-150
-        };
+      try {
+        // دریافت داده از گوگل شیت
+        userData = await fetchUserData(code);
         
-        // نمایش امتیاز
-        document.getElementById("totalScore").textContent = userData.totalScore;
-        document.getElementById("scoreDisplay").style.display = "block";
-        
-        // فعال کردن دکمه چرخش اگر امتیاز کافی باشد
+        // نمایش اطلاعات کاربر
+        updateScoreDisplay();
         canSpin = userData.totalScore >= 5;
         updateSpinButtonState();
         
@@ -453,10 +534,22 @@
         wheelResult.style.display = "block";
         wheelResult.style.background = canSpin ? "#4361ee" : "#f72585";
         
+      } catch (error) {
+        alert("خطا در دریافت اطلاعات. لطفاً دوباره تلاش کنید.");
+        console.error(error);
+      } finally {
         // بازگرداندن دکمه به حالت اول
         btn.disabled = false;
         btn.textContent = "مشاهده امتیازات";
-      }, 1500);
+      }
+    }
+    
+    // به‌روزرسانی نمایش امتیاز
+    function updateScoreDisplay() {
+      document.getElementById("signupScore").textContent = userData.signupScore;
+      document.getElementById("presenceScore").textContent = userData.presenceScore;
+      document.getElementById("totalScore").textContent = userData.totalScore;
+      document.getElementById("scoreDisplay").style.display = "block";
     }
     
     // به‌روزرسانی وضعیت دکمه چرخش
@@ -479,6 +572,7 @@
     // رویدادهای کلیک
     document.getElementById("checkScoreBtn").addEventListener("click", checkScore);
     document.getElementById("spinButton").addEventListener("click", spinWheel);
+    document.getElementById("submitPrizeBtn").addEventListener("click", submitPrizeToForm);
     
     // مقداردهی اولیه هنگام بارگذاری صفحه
     window.onload = function() {
