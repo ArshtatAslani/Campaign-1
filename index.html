@@ -132,8 +132,8 @@
     }
     
     #wheelCanvas {
-      width: 250px;
-      height: 250px;
+      width: 280px;
+      height: 280px;
       border-radius: 50%;
       border: 8px solid #4361ee;
       box-shadow: 0 5px 20px rgba(67, 97, 238, 0.3);
@@ -227,7 +227,7 @@
         <input type="text" id="codeInput" placeholder="کد ۵ رقمی" maxlength="5">
       </div>
       
-      <button class="btn" onclick="checkScore()">مشاهده امتیازات</button>
+      <button class="btn" id="checkScoreBtn">مشاهده امتیازات</button>
       
       <div class="score-display" id="scoreDisplay">
         <div>امتیاز کل شما:</div>
@@ -245,7 +245,7 @@
           </div>
           <canvas id="wheelCanvas" width="300" height="300"></canvas>
         </div>
-        <button class="spin-btn" id="spinButton" onclick="spinWheel()" disabled>
+        <button class="spin-btn" id="spinButton" disabled>
           <i class="fas fa-redo"></i> چرخش چرخ شانس
         </button>
         <div class="wheel-result" id="wheelResult"></div>
@@ -290,6 +290,8 @@
       const centerX = wheel.canvas.width / 2;
       const centerY = wheel.canvas.height / 2;
       const radius = Math.min(centerX, centerY) - 10;
+      
+      // پاک کردن کانواس
       ctx.clearRect(0, 0, wheel.canvas.width, wheel.canvas.height);
 
       // رسم بخش‌های چرخ
@@ -313,15 +315,24 @@
         ctx.rotate(startAngle + (Math.PI / wheel.segments));
         ctx.textAlign = 'right';
         ctx.fillStyle = 'white';
-        ctx.font = 'bold 12px Arial';
-        ctx.fillText(wheel.prizes[i], radius - 15, 5);
+        ctx.font = 'bold 14px Arial';
+        ctx.fillText(wheel.prizes[i], radius - 20, 5);
         ctx.restore();
       }
 
       // دکمه مرکزی
       ctx.beginPath();
-      ctx.arc(centerX, centerY, 15, 0, 2 * Math.PI);
+      ctx.arc(centerX, centerY, 20, 0, 2 * Math.PI);
       ctx.fillStyle = '#3a0ca3';
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      
+      // دایره کوچک مرکزی
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
+      ctx.fillStyle = '#FFD700';
       ctx.fill();
     }
 
@@ -403,7 +414,7 @@
       const code = document.getElementById("codeInput").value.trim();
       
       // اعتبارسنجی ساده
-      if (!/^\d{10}$/.test(nationalCode) {
+      if (!/^\d{10}$/.test(nationalCode)) {
         alert("لطفاً کد ملی را صحیح وارد کنید (۱۰ رقم)");
         return;
       }
@@ -413,13 +424,12 @@
         return;
       }
       
+      // نمایش لودینگ
+      const btn = document.getElementById("checkScoreBtn");
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال بررسی...';
+      
       // شبیه‌سازی دریافت اطلاعات از سرور
-      simulateServerRequest(code, nationalCode);
-    }
-    
-    // شبیه‌سازی درخواست سرور
-    function simulateServerRequest(code, nationalCode) {
-      // در حالت واقعی اینجا باید به سرور درخواست بزنید
       setTimeout(() => {
         // داده‌های نمونه
         userData = {
@@ -442,7 +452,11 @@
         wheelResult.textContent = canSpin ? "آماده برای چرخش!" : "امتیاز شما کافی نیست!";
         wheelResult.style.display = "block";
         wheelResult.style.background = canSpin ? "#4361ee" : "#f72585";
-      }, 800);
+        
+        // بازگرداندن دکمه به حالت اول
+        btn.disabled = false;
+        btn.textContent = "مشاهده امتیازات";
+      }, 1500);
     }
     
     // به‌روزرسانی وضعیت دکمه چرخش
@@ -461,6 +475,10 @@
       this.value = this.value.replace(/\D/g, '');
       if (this.value.length > 5) this.value = this.value.slice(0, 5);
     });
+    
+    // رویدادهای کلیک
+    document.getElementById("checkScoreBtn").addEventListener("click", checkScore);
+    document.getElementById("spinButton").addEventListener("click", spinWheel);
     
     // مقداردهی اولیه هنگام بارگذاری صفحه
     window.onload = function() {
