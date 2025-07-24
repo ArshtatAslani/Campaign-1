@@ -295,7 +295,7 @@
       line-height: 1;
     }
     
-    .score-card.signup .score-value {
+    .score-card.registration .score-value {
       color: #0c3483;
     }
     
@@ -378,7 +378,6 @@
       font-weight: 500;
     }
     
-    /* Responsive styles */
     @media (max-width: 600px) {
       .container {
         margin: 10px;
@@ -479,7 +478,7 @@
 
   <script>
     // Google Apps Script endpoint
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZzmxCbcROVU3P8QqEfo0lQL98jPSfKy8mGSZjdymlqC90dSc_3TPcJL0FbfF37dg9/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcnwLPRGLBOxC6E1_kOhBBs4Wfj34S6H_U8jjvJCa9VWHtkRca6x0vV_Va6iiFVs2BHQ/exec";
     
     // برای ذخیره داده‌های دریافتی
     let lastResponse = null;
@@ -525,22 +524,22 @@
       // پنهان کردن وضعیت بارگذاری
       loadingEl.style.display = "none";
       
-      // بررسی وجود خطا در پاسخ
-      if (data.error) {
-        showError(data.error);
+      // اعتبارسنجی پیشرفته با فیلدهای واقعی
+      const requiredFields = ['name', 'total_score', 'signup_score', 'presence_score'];
+      const missingFields = requiredFields.filter(field => {
+        return data[field] === undefined || data[field] === null;
+      });
+      
+      if (missingFields.length > 0) {
+        console.error("فیلدهای ضروری وجود ندارند:", missingFields);
+        showError(`خطا در دریافت داده‌ها. فیلدهای ضروری وجود ندارند: ${missingFields.join(', ')}`);
         return;
       }
       
-      // اعتبارسنجی ساختار داده
-      if (!data.name || data.signup_score === undefined || data.presence_score === undefined) {
-        showError("داده‌های دریافتی ناقص هستند");
-        return;
-      }
-      
-      // تبدیل مقادیر به عدد
-      const registrationScore = parseInt(data.signup_score) || 0;
+      // تبدیل مقادیر به عدد با مقدار پیش‌فرض 0
+      const signupScore = parseInt(data.signup_score) || 0;
       const presenceScore = parseInt(data.presence_score) || 0;
-      const totalScore = signupScore + presenceScore;
+      const totalScore = parseInt(data.total_score) || 0;
       
       // نمایش نتایج
       resultContent.innerHTML = `
@@ -550,7 +549,7 @@
             ${data.name}
           </div>
           <div style="font-size: 1rem; color: #5a6a8c; background: #edf4ff; display: inline-block; padding: 5px 20px; border-radius: 30px;">
-            کد بازاریاب: ${document.getElementById("codeInput").value}
+            کد بازاریاب: ${data.code || document.getElementById("codeInput").value}
           </div>
         </div>
         
