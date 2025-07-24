@@ -350,22 +350,55 @@
       margin-top: 3px;
     }
     
-    .debug-info {
-      background: #f0f4ff;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 20px;
-      font-size: 0.85rem;
-      color: #5a6a8c;
-      display: none;
+    /* استایل‌های چرخ‌شانس */
+    .wheel-container {
+      text-align: center;
+      margin: 30px 0;
     }
     
-    .debug-toggle {
-      color: #0c3483;
-      font-size: 0.8rem;
-      cursor: pointer;
-      text-align: center;
-      margin-top: 10px;
+    .wheel-wrapper {
+      position: relative;
+      display: inline-block;
+      margin: 20px 0;
+    }
+    
+    #wheelCanvas {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .wheel-pointer {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
+      z-index: 10;
+      color: #ff2070;
+      font-size: 2.5rem;
+      text-shadow: 0 0 10px rgba(255, 32, 112, 0.5);
+    }
+    
+    .spin-btn {
+      max-width: 250px;
+      margin: 20px auto 0;
+      padding: 15px 25px;
+      font-size: 1.1rem;
+    }
+    
+    .wheel-result {
+      margin-top: 20px;
+      padding: 15px;
+      background: linear-gradient(90deg, #ff8a00 0%, #ff2070 100%);
+      color: white;
+      border-radius: 30px;
+      font-weight: 700;
+      display: none;
     }
     
     footer {
@@ -410,6 +443,10 @@
       
       .input-icon {
         left: 18px;
+      }
+      
+      .wheel-container {
+        margin: 20px 0;
       }
     }
   </style>
@@ -456,18 +493,6 @@
             <p>لطفاً کد بازاریابی خود را وارد کرده و روی دکمه "مشاهده امتیازات" کلیک کنید</p>
           </div>
         </div>
-        
-        <div class="debug-info" id="debugInfo">
-          <div class="description-title">
-            <i class="fas fa-bug"></i>
-            اطلاعات دیباگ
-          </div>
-          <pre id="debugData"></pre>
-        </div>
-        
-        <div class="debug-toggle" id="debugToggle" onclick="toggleDebug()">
-          نمایش اطلاعات دیباگ
-        </div>
       </div>
     </div>
     
@@ -480,17 +505,10 @@
     // Google Apps Script endpoint
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZzmxCbcROVU3P8QqEfo0lQL98jPSfKy8mGSZjdymlqC90dSc_3TPcJL0FbfF37dg9/exec";
     
-    // برای ذخیره داده‌های دریافتی
-    let lastResponse = null;
-    
     function checkScore() {
       const code = document.getElementById("codeInput").value.trim();
       const resultContent = document.getElementById("resultContent");
       const loadingEl = document.getElementById("loading");
-      const debugInfo = document.getElementById("debugInfo");
-      
-      // پنهان کردن اطلاعات دیباگ
-      debugInfo.style.display = "none";
       
       // اعتبارسنجی ورودی
       if (!/^\d{5}$/.test(code)) {
@@ -515,11 +533,6 @@
     function handleResponse(data) {
       const resultContent = document.getElementById("resultContent");
       const loadingEl = document.getElementById("loading");
-      const debugData = document.getElementById("debugData");
-      
-      // ذخیره داده‌های دریافتی برای دیباگ
-      lastResponse = data;
-      debugData.textContent = JSON.stringify(data, null, 2);
       
       // پنهان کردن وضعیت بارگذاری
       loadingEl.style.display = "none";
@@ -582,6 +595,19 @@
           </div>
         </div>
         
+        <div class="wheel-container">
+          <div class="wheel-wrapper">
+            <div class="wheel-pointer">
+              <i class="fas fa-caret-down"></i>
+            </div>
+            <canvas id="wheelCanvas" width="300" height="300"></canvas>
+          </div>
+          <button class="btn spin-btn" onclick="spinWheel()">
+            <i class="fas fa-redo"></i> چرخش چرخ شانس
+          </button>
+          <div class="wheel-result" id="wheelResult"></div>
+        </div>
+        
         <div class="score-description">
           <div class="description-title">
             <i class="fas fa-info-circle"></i>
@@ -603,6 +629,9 @@
           </ul>
         </div>
       `;
+      
+      // مقداردهی اولیه چرخ‌شانس
+      initWheel();
     }
     
     function showError(message) {
@@ -620,19 +649,6 @@
       `;
     }
     
-    function toggleDebug() {
-      const debugInfo = document.getElementById("debugInfo");
-      const debugToggle = document.getElementById("debugToggle");
-      
-      if (debugInfo.style.display === "none" || !debugInfo.style.display) {
-        debugInfo.style.display = "block";
-        debugToggle.textContent = "پنهان کردن اطلاعات دیباگ";
-      } else {
-        debugInfo.style.display = "none";
-        debugToggle.textContent = "نمایش اطلاعات دیباگ";
-      }
-    }
-    
     // اعتبارسنجی ورودی برای فقط عدد و حداکثر 5 رقم
     document.getElementById("codeInput").addEventListener("input", function() {
       this.value = this.value.replace(/\D/g, '');
@@ -647,6 +663,108 @@
         document.querySelector('.container').style.opacity = 1;
       }, 100);
     });
+    
+    // چرخ‌شانس با 8 بخش
+    const wheel = {
+      canvas: null,
+      ctx: null,
+      segments: 8,
+      prizes: [
+        "100 امتیاز", "50 امتیاز", "200 امتیاز", 
+        "10 امتیاز", "500 امتیاز", "20 امتیاز", 
+        "300 امتیاز", "150 امتیاز"
+      ],
+      colors: [
+        "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", 
+        "#9966FF", "#FF9F40", "#C9CBCF", "#7EBE37"
+      ],
+      angle: 0,
+      spinning: false
+    };
+
+    function initWheel() {
+      wheel.canvas = document.getElementById('wheelCanvas');
+      wheel.ctx = wheel.canvas.getContext('2d');
+      drawWheel();
+    }
+
+    function drawWheel() {
+      const ctx = wheel.ctx;
+      const centerX = wheel.canvas.width / 2;
+      const centerY = wheel.canvas.height / 2;
+      const radius = Math.min(centerX, centerY) - 10;
+      ctx.clearRect(0, 0, wheel.canvas.width, wheel.canvas.height);
+
+      for (let i = 0; i < wheel.segments; i++) {
+        const startAngle = i * 2 * Math.PI / wheel.segments + wheel.angle;
+        const endAngle = (i + 1) * 2 * Math.PI / wheel.segments + wheel.angle;
+
+        // رسم بخش‌های چرخ
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = wheel.colors[i];
+        ctx.fill();
+
+        // متن جایزه‌ها
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(startAngle + (Math.PI / wheel.segments));
+        ctx.textAlign = 'right';
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 14px Arial';
+        ctx.fillText(wheel.prizes[i], radius - 10, 5);
+        ctx.restore();
+      }
+
+      // دکمه مرکزی
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 15, 0, 2 * Math.PI);
+      ctx.fillStyle = 'white';
+      ctx.fill();
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function spinWheel() {
+      if (wheel.spinning) return;
+
+      wheel.spinning = true;
+      const spinDuration = 5000; // 5 ثانیه
+      const startTime = Date.now();
+      const startAngle = wheel.angle;
+      const spins = 5; // تعداد چرخش‌ها
+      const segmentAngle = 2 * Math.PI / wheel.segments;
+      const winningSegment = Math.floor(Math.random() * wheel.segments);
+      const targetAngle = startAngle + spins * 2 * Math.PI + (wheel.segments - winningSegment) * segmentAngle;
+
+      function animate() {
+        const currentTime = Date.now();
+        const elapsed = currentTime - startTime;
+        if (elapsed < spinDuration) {
+          const progress = elapsed / spinDuration;
+          const easeProgress = 1 - Math.pow(1 - progress, 3); // انیمیشن نرم
+          wheel.angle = startAngle + easeProgress * (targetAngle - startAngle);
+          drawWheel();
+          requestAnimationFrame(animate);
+        } else {
+          wheel.angle = targetAngle;
+          drawWheel();
+          wheel.spinning = false;
+          
+          // نمایش نتیجه
+          setTimeout(() => {
+            const wheelResult = document.getElementById("wheelResult");
+            wheelResult.innerHTML = `تبریک! شما ${wheel.prizes[winningSegment]} برنده شدید!`;
+            wheelResult.style.display = "block";
+          }, 500);
+        }
+      }
+
+      animate();
+    }
   </script>
 </body>
 </html>
