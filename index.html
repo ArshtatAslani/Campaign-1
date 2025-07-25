@@ -348,35 +348,16 @@
       text-align: center;
     }
     
-    .score-card.score-card-title {
-      color: rgba(255, 255, 255, 0.9);
-    }
-    
     .score-value {
       font-size: 1.5rem;
       font-weight: 700;
       line-height: 1.2;
     }
     
-    .score-card.signup .score-value {
-      color: var(--primary);
-    }
-    
-    .score-card.presence .score-value {
-      color: var(--secondary);
-    }
-    
-    .score-card.burn .score-value {
-      color: var(--accent);
-    }
-    
-    .score-card.rewards .score-value {
-      color: #26d0ce;
-    }
-    
-    .score-card.score-value {
-      color: white;
-    }
+    .score-card.signup .score-value { color: var(--primary); }
+    .score-card.presence .score-value { color: var(--secondary); }
+    .score-card.burn .score-value { color: var(--accent); }
+    .score-card.rewards .score-value { color: #26d0ce; }
     
     .score-unit {
       font-size: 0.75rem;
@@ -478,6 +459,10 @@
       background: white;
       border-radius: 20px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      /* حداکثر عرض برای ظرافت بیشتر روی موبایل */
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
     }
     
     .wheel-header {
@@ -511,55 +496,70 @@
       font-size: 1rem;
     }
     
-.wheel-wrapper {
-  position: relative;
-  display: inline-block;
-  margin: 15px 0;
-  background: radial-gradient(circle at center, #ffffff 0%, #e0e5ec 100%);
-  padding: 20px;
-  border-radius: 50%;
-  box-shadow: inset -4px -4px 8px rgba(255,255,255,0.8),
-              inset 4px 4px 8px rgba(0,0,0,0.1),
-              0 6px 15px rgba(0,0,0,0.15);
-}
-
-#wheelCanvas {
-  border-radius: 50%;
-  box-shadow: 0 0 25px rgba(0,0,0,0.15), 0 0 8px rgba(0,0,0,0.1);
-}
-
-.wheel-pointer {
-  background: radial-gradient(circle, #ff4d8c, #d1005b);
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  box-shadow: 0 0 12px rgba(255, 32, 112, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  color: white;
-}
-
+    .wheel-wrapper {
+      position: relative;
+      display: inline-block;
+      margin: 15px 0;
+      /* --- شروع بازطراحی --- */
+      background: radial-gradient(circle at center, #ffffff 0%, #e0e5ec 100%);
+      padding: 22px;
+      border-radius: 50%;
+      box-shadow:
+        inset -4px -4px 8px rgba(255,255,255,0.8),
+        inset 4px 4px 8px rgba(0,0,0,0.08),
+        0 10px 25px rgba(0,0,0,0.12);
+      /* --- پایان بازطراحی --- */
+    }
     
-.spin-btn {
-  background: linear-gradient(90deg, #ff8a00, #ff2070);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  padding: 16px 30px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 6px 20px rgba(255, 138, 0, 0.4);
-  transition: all 0.3s ease;
-}
-
-.spin-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(255, 138, 0, 0.6);
-}
-
+    #wheelCanvas {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 50%;
+      /* --- شروع بازطراحی --- */
+      box-shadow: 0 0 25px rgba(0,0,0,0.15), 0 0 8px rgba(0,0,0,0.08);
+      border: none;
+      /* --- پایان بازطراحی --- */
+    }
+    
+    .wheel-pointer {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 55px;
+      height: 55px;
+      z-index: 10;
+      /* --- شروع بازطراحی --- */
+      background: radial-gradient(circle, #ff4d8c, #d1005b);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 0 0 12px rgba(255, 32, 112, 0.6);
+      filter: drop-shadow(0 4px 2px rgba(0,0,0,0.2));
+      /* --- پایان بازطراحی --- */
+    }
+    
+    .spin-btn {
+      max-width: 240px;
+      margin: 15px auto 0;
+      padding: 14px 22px;
+      font-size: 1.1rem;
+      /* --- شروع بازطراحی --- */
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
+      border-radius: 50px;
+      box-shadow: 0 6px 20px rgba(255, 138, 0, 0.4);
+      transition: all 0.3s ease;
+      /* --- پایان بازطراحی --- */
+    }
+    .spin-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(255, 138, 0, 0.6);
+    }
     
     .wheel-cost {
       margin-top: 8px;
@@ -572,18 +572,19 @@
       border-radius: 30px;
     }
     
-.wheel-result {
-  margin-top: 20px;
-  background: linear-gradient(90deg, #ff8a00, #ff2070);
-  padding: 14px 25px;
-  border-radius: 40px;
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
+    .wheel-result {
+      margin-top: 15px;
+      padding: 12px 20px;
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
+      color: white;
+      border-radius: 25px;
+      font-weight: 700;
+      display: none;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 12px rgba(255, 138, 0, 0.35);
+      /* --- بازطراحی: افکت ورودی --- */
+      animation: fadeIn 0.45s ease-out;
+    }
     
     .form-submit-container {
       margin-top: 15px;
@@ -829,6 +830,9 @@
           </div>
           <canvas id="wheelCanvas" width="300" height="300"></canvas>
         </div>
+        <button class="btn spin-btn" id="spinButton" disabled>
+          <i class="fas fa-redo"></i> چرخاندن گردانه
+        </button>
         <div class="wheel-result" id="wheelResult"></div>
       </div>
       
@@ -1124,18 +1128,10 @@
       wheel.ctx = wheel.canvas.getContext('2d');
       drawWheel();
       
-      // اضافه کردن دکمه چرخش
-      const wheelContainer = document.querySelector('.wheel-container');
-      const spinButton = document.createElement('button');
-      spinButton.className = 'btn spin-btn';
-      spinButton.id = 'spinButton';
-      spinButton.innerHTML = '<i class="fas fa-redo"></i> چرخاندن گردانه';
+      // دکمه از قبل در HTML قرار داده شده است (spinButton)
+      const spinButton = document.getElementById('spinButton');
       spinButton.onclick = spinWheel;
       spinButton.disabled = true;
-      
-      // تغییر در نحوه درج دکمه چرخش
-      const wheelWrapper = document.querySelector('.wheel-wrapper');
-      wheelContainer.insertBefore(spinButton, wheelWrapper.nextSibling);
     }
 
     function drawWheel() {
